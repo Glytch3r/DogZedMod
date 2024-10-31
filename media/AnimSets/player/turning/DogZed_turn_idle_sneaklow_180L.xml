@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_turn_idle_sneaklow_180.xml">
 	<m_Name>DogZed_turn_idle_sneaklow_180L</m_Name>
-	<m_AnimName>Dog_Idle_1</m_AnimName>
+	<m_AnimName>Dog_Walk</m_AnimName>
 	<m_Conditions />
 	<m_Conditions />
 	<m_Conditions />
