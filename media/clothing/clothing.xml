@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<outfitManager>
+
+	<m_MaleOutfits>
+		<m_Name>RadiatedDog</m_Name>
+		<m_Guid>a42ee356-4d47-42b0-8788-5fac49f5ad78</m_Guid>
+		<m_Top>false</m_Top>
+		<m_Pants>false</m_Pants>
+		<m_items>
+			<itemGUID>9a6b02a7-b64b-44ad-9271-f85ccb0d9c0f</itemGUID>
+		</m_items>
+	</m_MaleOutfits>
+
+
+	<m_FemaleOutfits>
+		<m_Name>ShadowDog_1</m_Name>
+		<m_Guid>e81cea71-c291-4029-8d2d-68c722b3a1b7</m_Guid>
+		<m_Top>false</m_Top>
+		<m_Pants>false</m_Pants>
+		<m_items>
+			<itemGUID>e22d7354-ef4f-4191-8ed9-8ab4866905b4</itemGUID>
+		</m_items>
+	</m_FemaleOutfits>
+
+
+
+	<m_FemaleOutfits>
+		<m_Name>ShadowDog_2</m_Name>
+		<m_Guid>b1adb856-b5aa-4c2d-bb9d-8ba5c325344c</m_Guid>
+		<m_Top>false</m_Top>
+		<m_Pants>false</m_Pants>
+		<m_items>
+			<itemGUID>0148886d-876f-4eea-abea-e1dc74a59595</itemGUID>
+		</m_items>
+	</m_FemaleOutfits>
+
+
+</outfitManager>
+

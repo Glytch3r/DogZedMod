@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode x_extends="DogZed_DoorBang.xml">
+	<m_Name>DogZed_DoorClaw</m_Name>
+	<m_Conditions>
+		<m_StringValue>DoorClaw</m_StringValue>
+	</m_Conditions>
+	<m_Conditions>
+		<m_Name>isDogZed</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>true</m_StringValue>
+	</m_Conditions>
+</animNode>
