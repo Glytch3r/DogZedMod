@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>DogZed_crawler_stagger</m_Name>
+	<m_SpeedScale>7.80</m_SpeedScale>
+	<m_AnimName>Dog_HitReact</m_AnimName>
+	<m_BlendTime>0.14</m_BlendTime>
+	<m_Conditions>
+		<m_Name>isDogZed</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>true</m_StringValue>
+	</m_Conditions>
+</animNode>
