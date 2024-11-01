@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_crawlerattack_start.xml">
 	<m_Name>DogZed_crawlerattack_fail</m_Name>
-	<m_AnimName>Dog_Attack_1</m_AnimName>
+	<!-- <m_AnimName>Dog_Attack_1</m_AnimName> -->
+	<m_AnimName>Dog_JumpAttack</m_AnimName>
+	<m_SpeedScale>1.40</m_SpeedScale>
+
 	<m_Conditions>
 		<m_Name>ZombieBiteStarted</m_Name>
 		<m_Type>BOOL</m_Type>

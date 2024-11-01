@@ -1,0 +1,27 @@
+module Base {
+
+
+    model RadiatedDog_Dead
+    {
+        mesh = WorldItems/DogZed_Dead,
+        texture = RadiatedDog_Texture,
+        scale = 1.0,
+    }
+
+    model ShadowDog_Dead_A
+    {
+        mesh = WorldItems/DogZed_Dead,
+        texture = ShadowDog_Texture_A,
+        scale = 1.0,
+    }
+
+    model ShadowDog_Dead_B
+    {
+        mesh = WorldItems/DogZed_Dead,
+        texture = ShadowDog_Texture_B,
+        scale = 1.0,
+    }
+
+
+}
+

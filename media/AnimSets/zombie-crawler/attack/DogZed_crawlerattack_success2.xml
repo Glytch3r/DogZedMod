@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_crawlerattack_fail2.xml">
 	<m_Name>DogZed_crawlerattack_success2</m_Name>
-	<m_AnimName>Dog_Dash</m_AnimName>
+	<m_AnimName>Dog_JumpAttack</m_AnimName><!--  Dog_Dash -->
 	<m_Conditions />
 	<m_Conditions>
 		<m_BoolValue>true</m_BoolValue>

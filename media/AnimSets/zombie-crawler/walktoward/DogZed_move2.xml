@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_move.xml">
 	<m_Name>DogZed_move2</m_Name>
-	<m_AnimName>Dog_Sprint</m_AnimName>
+	<m_SpeedScale>AnimSpeed</m_SpeedScale>
+
+	<m_AnimName>Dog_Run</m_AnimName>
 	<m_Conditions/>
 	<m_Conditions>
 		<m_Name>CrawlerType</m_Name>
