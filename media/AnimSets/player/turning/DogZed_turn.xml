@@ -4,7 +4,7 @@
 	<m_DeferredBoneName>Bip01</m_DeferredBoneName>
 	<m_deferredBoneAxis>Z</m_deferredBoneAxis>
 	<m_useDeferedRotation>true</m_useDeferedRotation>
-	<m_SpeedScale>0.80</m_SpeedScale>
+	<m_SpeedScale>2</m_SpeedScale>
 	<m_BlendTime>0.10</m_BlendTime>
 	<m_BlendOutTime>0.20</m_BlendOutTime>
 	<m_Conditions>

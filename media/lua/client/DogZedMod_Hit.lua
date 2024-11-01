@@ -46,11 +46,18 @@ function DogZedMod.hitZed(zed, pl, part, wpn)
 
 	if not DogZedMod.isDogZed(zed) then return end
 
+
 	if DogZedMod.isShadowClone(zed)  then
 		DogZedMod.doDespawn(zed)
+		zed:startMuzzleFlash()
 	end
-	if not DogZedMod.getAbsorbDmgChance() then
-		zed:setAvoidDamage(true)
+
+
+
+	local absorb =  DogZedMod.getAbsorbDmgChance()
+	zed:setAvoidDamage(absorb)
+	if absorb then
+		zed:setVariable("HitReaction", "Dog_HitReact")
 		local varHP = DogZedMod.getVarHP(zed)
 		local healthDmg = 3 / varHP
 		zed:setHealth(zed:getHealth()-healthDmg)

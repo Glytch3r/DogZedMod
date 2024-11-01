@@ -2,7 +2,7 @@
 <animNode x_extends="DogZed_turn.xml">
 	<m_Name>DogZed_turn_aim</m_Name>
 	<m_BlendTime>0.08</m_BlendTime>
-	<m_maxTorsoTwist>70.0</m_maxTorsoTwist>
+	<m_maxTorsoTwist>180</m_maxTorsoTwist>
 	<m_Conditions />
 	<m_Conditions>
 		<m_Name>isMoving</m_Name>

@@ -20,6 +20,10 @@ function DogZedMod.getDayTimeInt()
 	return 1
 end
 
+-----------------------            ---------------------------
+LuaEventManager.AddEvent("OnClockUpdate")
+LuaEventManager.AddEvent("OnOscillatorFlow")
+
 function DogZedMod.startTiming ()
 
     local prevSec = PZCalendar.getInstance():get(Calendar.SECOND)
@@ -35,98 +39,145 @@ end
 
 Events.OnGameStart.Add(function()
     if isIngameState() then
-        LuaEventManager.AddEvent("OnClockUpdate")
+
         DogZedMod.startTiming()
         DogZedMod.isClockActive = true
     end
 end)
 -----------------------     osc*       ---------------------------
-OSC = {}
+
 Events.OnGameStart.Add(function()
     if isIngameState() then
         LuaEventManager.AddEvent("OnOscillatorShift")
-        OSC.OscPrint = false
-        OSC.startOscillator()
+        LuaEventManager.AddEvent("OnOscillatorFlow")
+        DogZedMod.OscPrint = false
+        DogZedMod.startOscillator()
     end
 end)
 
-function OSC.startOscillator()
+function DogZedMod.startOscillator()
     local pl = getPlayer()
-    local count = 0
-    local max = 100
+    local intensity = 0
+    local max = 255
     local min = 0
     local step = 1
-    local forward = true
-    local backward = false
-    OSC.OscDir = OSC.OscDir or forward
-    local prevOsc = OSC.OscDir
+    local isForward = true
+    DogZedMod.OscIsDirForward = DogZedMod.OscIsDirForward or forward
+    local prevOsc = DogZedMod.OscIsDirForward
 
-    OSC.isOscillator = true
-    OSC.Oscillation = OSC.Oscillation or 0
+    DogZedMod.isOscillator = true
+    DogZedMod.Oscillation = DogZedMod.Oscillation or 0
 
     local function update_count()
-        prevOsc = OSC.OscDir
-        if forward then
-            count = count + step
-            OSC.OscDir = true
-        elseif backward then
-            count = count - step
-            OSC.OscDir = false
+        prevOsc = DogZedMod.OscIsDirForward
+        if isForward then
+            intensity = intensity + step
+            DogZedMod.OscIsDirForward = true
+        else
+            intensity = intensity - step
+            DogZedMod.OscIsDirForward = false
         end
-        if OSC.OscDir ~= prevOsc then triggerEvent("OnOscillatorShift", OSC.OscDir, OSC.OscillatorColor) end
+        if DogZedMod.OscIsDirForward ~= prevOsc then triggerEvent("OnOscillatorShift", DogZedMod.OscIsDirForward) end
     end
 
-    function OSC.Oscillator()
+    function DogZedMod.Oscillator()
         update_count()
-        if not OSC.isOscillator then
-            Events.OnTick.Remove(OSC.Oscillator)
+        if not DogZedMod.isOscillator then
+            Events.OnTick.Remove(DogZedMod.Oscillator)
             return
         end
-        if count >= max then
-            forward = false
-            backward = true
-        elseif count <= min then
-            forward = true
-            backward = false
+        if intensity >= max then
+            isForward = false
+        elseif intensity <= min then
+            isForward = true
         end
-        if count % 2 == 0 then
-            OSC.Oscillation = count/100
+        if intensity % 5 == 0 then
+            --DogZedMod.Oscillation = intensity/100
+            DogZedMod.Oscillation = intensity
+            triggerEvent("OnOscillatorFlow", intensity)
         end
-        if getCore():getDebug() and OSC.OscPrint then
-            local osc =  OSC.Oscillation
+
+    --[[     if getCore():getDebug() and DogZedMod.OscPrint then
+            local osc =  DogZedMod.Oscillation
             local rgb = luautils.getConditionRGB(osc)
-            OSC.OscillatorColor = rgb
+            DogZedMod.OscillatorColor = rgb
             if pl then
                 pl:setHaloNote(tostring(),rgb.r,rgb.g,rgb.b,100)
-                print("Count:", osc)
+                print("intensity:", osc)
             end
         end
-
+ ]]
     end
-    Events.OnTick.Add(OSC.Oscillator)
+    Events.OnTick.Add(DogZedMod.Oscillator)
 end
 
-function OSC.stopOscillator()
-    OSC.isOscillator = nil
+function DogZedMod.stopOscillator()
+    DogZedMod.isOscillator = nil
 end
 
-function OSC.getOsc()
-    return OSC.Oscillation or nil
+function DogZedMod.getOsc()
+    return DogZedMod.Oscillation or nil
 end
 
-function OSC.getOscDir()
-    return OSC.OscDir or nil
+function DogZedMod.getOscDir()
+    return DogZedMod.OscIsDirForward or nil
 end
 
-
-function OSC.setOscPrint(bool)
+function DogZedMod.setOscPrint(bool)
     if bool == nil then
-        OSC.OscPrint = not OSC.OscPrint
+        DogZedMod.OscPrint = not DogZedMod.OscPrint
     else
-        OSC.OscPrint = bool
+        DogZedMod.OscPrint = bool
     end
 end
 
 
 
 
+
+function DogZedMod.isShouldRadiate(zed, pl)
+    local range = 12
+    --TODO add the sandbox option
+    --local range = SandboxVars.DogZedMod.RadiationEffectRange or 12
+    if not zed then return false end
+    if DogZedMod.isDay() then return false end
+    if zed:isDead() then return false end
+    if not pl then pl = getPlayer() end
+    if not pl:CanSee(zed) then return false end
+    return DogZedMod.isWithinRange(pl, zed, range)
+end
+
+
+function DogZedMod.addRadiation(zed, intensity)
+    if not zed then return end
+    local cell = getCell()
+    local radiation
+    local lastGlow = zed:getModData()['radiation']
+
+    local x, y, z = zed:getX(), zed:getY(), zed:getZ()
+    if lastGlow then
+        cell:removeLamppost(lastGlow)
+    end
+    if x and y and z  then
+        lastGlow = IsoLightSource.new(x, y, z, 25, 255, 110, intensity)
+        cell:addLamppost(lastGlow)
+        zed:getModData()['radiation'] = lastGlow
+    end
+end
+
+--[[
+function DogZedMod.Radiate(intensity)
+    local pl = getPlayer(); if not pl then return end
+	local zombies = getCell():getObjectList()
+	for i=zombies:size(),1,-1 do
+		local zed = zombies:get(i-1)
+		if DogZedMod.isRadiatedDog(zed) then
+            if DogZedMod.isShouldRadiate(zed, pl) then
+                DogZedMod.addRadiation(zed, intensity)
+            end
+		end
+	end
+end
+Events.OnOscillatorFlow.Add(DogZedMod.Radiate)
+
+ ]]

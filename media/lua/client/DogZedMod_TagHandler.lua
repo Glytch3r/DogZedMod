@@ -26,7 +26,7 @@
 █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████--]]
 
 
-
+require "lua_timers"
 DogZedMod = DogZedMod or {}
 
 function DogZedMod.isShowTag()
@@ -81,6 +81,96 @@ function DogZedMod.clearStatsToAll()
         end
     end
 end
+
+
+-----------------------            ---------------------------
+
+
+DogZedMod.Highlighter = {}
+DogZedMod.Highlighter.__index = DogZedMod.Highlighter
+
+function DogZedMod.Highlighter:new(sq)
+    local instance = setmetatable({}, self)
+    instance.sq = sq
+    instance.ticks = 0
+    return instance
+end
+
+function DogZedMod.Highlighter:tck()
+    self.ticks = self.ticks + 1
+    if self.ticks % 9 == 0 then
+        self.ticks = 0
+
+        local num1 = DogZedMod.normalizeTo100(ZombRand(1, 60), 0, 60) / 100
+        local num2 = DogZedMod.normalizeTo100(ZombRand(1, 60), 0, 60) / 100
+        local num3 = DogZedMod.normalizeTo100(ZombRand(1, 60), 0, 60) / 100
+
+        local m = getWorldMarkers():addGridSquareMarker("circle_only_highlight_2", "", self.sq, 1, 1, 1, true, num1)
+        local m2 = getWorldMarkers():addGridSquareMarker("circle_only_highlight_2", "", self.sq, 1, 1, 1, true, num2)
+        local m3 = getWorldMarkers():addGridSquareMarker("circle_only_highlight_2", "", self.sq, 1, 1, 1, true, num3)
+
+        timer:Simple(0.5, function()
+            m:remove()
+            m2:remove()
+            m3:remove()
+        end)
+    end
+end
+
+function DogZedMod.Highlighter:start()
+    self.onTickFunction = function() self:tck() end
+    Events.OnTick.Add(self.onTickFunction)
+    timer:Simple(3, function()
+        self:stop()
+    end)
+end
+
+
+
+
+function DogZedMod.Highlighter:stop()
+    Events.OnTick.Remove(self.onTickFunction)
+end
+
+
+
+function DogZedMod.addHLtoSq(sq)
+    local highlighterInstance = DogZedMod.Highlighter:new(sq)
+    highlighterInstance:start()
+    timer:Simple(3, function()
+        highlighterInstance:stop()
+        highlighterInstance = nil
+    end)
+end
+--[[
+function DogZedMod.RadiationMarkers(sq)
+    local pl = getPlayer(); if not pl then return end
+	local zombies = getCell():getObjectList()
+	for i=zombies:size(),1,-1 do
+		local zed = zombies:get(i-1)
+		if DogZedMod.isRadiatedDog(zed) then
+            if DogZedMod.isShouldRadiate(zed, pl) then
+                local sq = zed:getSquare()
+                if sq then
+                    DogZedMod.addHLtoSq(sq)
+                end
+            end
+		end
+	end
+end
+Events.OnClockUpdate.Remove(DogZedMod.RadiationMarkers)
+Events.OnClockUpdate.Add(DogZedMod.RadiationMarkers)
+
+
+ ]]
+
+
+
+
+
+
+
+-----------------------            ---------------------------
 --[[
 function DogZedMod.dayShift(timeOfDay)
     if timeOfDay == "Day" then

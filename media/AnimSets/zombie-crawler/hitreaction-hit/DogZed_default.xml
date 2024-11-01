@@ -2,8 +2,8 @@
 <animNode>
 	<m_Name>DogZed_default</m_Name>
 	<m_AnimName>Dog_HitReact</m_AnimName>
-	<m_SpeedScale>7.23</m_SpeedScale>
-	<m_BlendTime>0.04</m_BlendTime>
+	<m_SpeedScale>1</m_SpeedScale>
+	<m_BlendTime>0.30</m_BlendTime>
 	<m_Conditions>
 		<m_Name>isDogZed</m_Name>
 		<m_Type>STRING</m_Type>

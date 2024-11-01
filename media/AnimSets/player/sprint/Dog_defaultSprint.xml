@@ -3,7 +3,7 @@
 	<m_Name>Dog_defaultSprint</m_Name>
 	<m_AnimName>Dog_Sprint</m_AnimName>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
-	<m_SpeedScale>7</m_SpeedScale>
+	<m_SpeedScale>5</m_SpeedScale>
 	<m_BlendTime>0</m_BlendTime>
 	<m_BlendOutTime>0</m_BlendOutTime>
 	<m_Scalar>WalkInjury</m_Scalar>

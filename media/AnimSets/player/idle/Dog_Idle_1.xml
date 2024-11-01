@@ -111,11 +111,11 @@
 
 
 
-<!-- 	<m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
 		<boneName>Bip01_Pelvis</boneName>
 		<includeDescendants>false</includeDescendants>
 		<weight>12</weight>
-	</m_SubStateBoneWeights> -->
+	</m_SubStateBoneWeights>
 	<m_SubStateBoneWeights>
 		<boneName>Bip01_Spine</boneName>
 		<includeDescendants>false</includeDescendants>
@@ -135,10 +135,10 @@
 	<m_SubStateBoneWeights>
 		<boneName>Bip01_R_Thigh</boneName>
 	</m_SubStateBoneWeights>
-<!-- 	<m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
 		<boneName>Bip01</boneName>
 		<includeDescendants>false</includeDescendants>
-	</m_SubStateBoneWeights> -->
+	</m_SubStateBoneWeights>
 	<m_SubStateBoneWeights>
 		<boneName>Translation_Data</boneName>
 		<includeDescendants>true</includeDescendants>

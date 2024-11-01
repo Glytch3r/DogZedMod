@@ -88,7 +88,7 @@
 
 	<m_Transitions>
 		<m_Target>Dog_Idle</m_Target>
-		<m_AnimName>Dog_Run</m_AnimName>
+		<m_AnimName>Dog_Idle_1</m_AnimName>
 		<m_blendInTime>0.5</m_blendInTime>
 		<m_speedScale>1</m_speedScale>
 	</m_Transitions>

@@ -3,8 +3,8 @@
 	<m_Name>Dog_sneakidle</m_Name>
 	<m_AnimName>Dog_Wait</m_AnimName>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
-	<m_SpeedScale>8</m_SpeedScale>
-	<m_BlendTime>0</m_BlendTime>
+	<m_SpeedScale>4</m_SpeedScale>
+	<m_BlendTime>0.1</m_BlendTime>
 	<m_Scalar>IdleSpeed</m_Scalar>
 	<m_Scalar2>IdleSpeed</m_Scalar2>
 	<m_Conditions>
@@ -12,7 +12,7 @@
 		<m_Type>BOOL</m_Type>
 		<m_BoolValue>true</m_BoolValue>
 	</m_Conditions>
-<!--
+
 	<m_2DBlends referenceID="1">
 		<m_AnimName>Dog_Idle_1</m_AnimName>
 		<m_XPos>0.00</m_XPos>
@@ -80,7 +80,7 @@
 		<m_blendInTime>0.35</m_blendInTime>
 		<m_blendOutTime>0.35</m_blendOutTime>
 	</m_Transitions>
- -->
+
 	<m_Conditions>
 		<m_Name>isDogPl</m_Name>
 		<m_Type>STRING</m_Type>

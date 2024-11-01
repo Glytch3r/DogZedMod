@@ -18,7 +18,7 @@
 	</m_Conditions>
 	<m_Transitions>
 		<m_Target>Dog_sit_loop</m_Target>
-		<m_AnimName>Dog_SitToStand</m_AnimName>
+		<m_AnimName>Dog_Wait</m_AnimName>
 		<m_speedScale>1</m_speedScale>
 	</m_Transitions>
 	<m_Conditions>

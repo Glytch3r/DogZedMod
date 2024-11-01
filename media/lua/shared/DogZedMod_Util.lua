@@ -13,6 +13,11 @@ function DogZedMod.findzedID(int)
 	return nil
 end
 
+function DogZedMod.normalizeTo100(x, min, max)
+    x = math.max(min, math.min(x, max))
+    return ((x - min) / (max - min)) * 100
+end
+
 -----------------------            ---------------------------
 function DogZedMod.checkDist(pl, zed)
 	local dist = pl:DistTo(zed:getX(), zed:getY())

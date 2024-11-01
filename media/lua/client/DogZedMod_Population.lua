@@ -30,11 +30,56 @@
 DogZedMod = DogZedMod or {}
 
 
-DogZedMod.CorpseItems = {
-    [0]='Base.RadiatedDog_Dead',
-    [1]='Base.ShadowDog_Dead_1',
-    [2]='Base.ShadowDog_Dead_2',
+
+DogZedMod.CorpseReplacement = {
+    ['Base.RadiatedDog']={["isDogCorpse"]=true, ["drop"]="Base.RadiatedDog_Dead"},
+    ['Base.ShadowDog_1']={["isDogCorpse"]=true, ["drop"]="Base.ShadowDog_Dead_A"},
+    ['Base.ShadowDog_2']={["isDogCorpse"]=true, ["drop"]="Base.ShadowDog_Dead_B"},
 }
+
+function DogZedMod.handleCorpse(corpse)
+    local tab = DogZedMod.CorpseReplacement
+    local w = corpse:getWornItems()
+    for i = 0, w:size() - 1 do
+        local item = w:getItemByIndex(i)
+        if item then
+            local fType = item:getName()
+            if fType and tab[fType] then
+                local isDogCorpse = tab[fType].isDogCorpse
+                if isDogCorpse then
+                    local drop = tab[fType].drop
+                    local sq = corpse:getSquare()
+                    if sq then
+                        sq:AddWorldInventoryItem(tostring(drop), ZombRand(0, 1.5), ZombRand(0, 1.5), 0)
+                        sq:removeCorpse(corpse, isClient())
+                    end
+                end
+            end
+        end
+    end
+end
+
+function DogZedMod.CorpseCleaner()
+    local rad = 8
+    local pl = getPlayer(); if not pl then return end
+    local cell = pl:getCell()
+    local x, y, z = pl:getX(), pl:getY(), pl:getZ()
+    for xDelta = -rad, rad do
+        for yDelta = -rad, rad do
+            local sq = cell:getOrCreateGridSquare(x + xDelta, y + yDelta, z)
+            if sq then
+                local corpse = IsoObjectPicker.Instance:PickCorpse(sq:getX(), sq:getY()) or sq:getDeadBody()
+                if corpse and instanceof(corpse, "IsoDeadBody") then
+                    DogZedMod.handleCorpse(corpse)
+                end
+            end
+        end
+    end
+end
+Events.EveryOneMinute.Remove(DogZedMod.CorpseCleaner)
+Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
+-----------------------            ---------------------------
+
 function DogZedMod.getSpawnRandomZedInfo(fit)
     local maleOutfits = getAllOutfits(false)
     local femaleOutfits = getAllOutfits(true)
@@ -71,13 +116,19 @@ function DogZedMod.getSpawnRandomZedInfo(fit)
         return fit, 0
     end
 end
+
 function DogZedMod.doDespawn(zed)
-    zed:setAvoidDamage(false)
-    zed:changeState(ZombieOnGroundState.instance())
-    zed:setAttackedBy(getCell():getFakeZombieForHit())
-    zed:becomeCorpse()
-    zed:removeFromWorld();
-    zed:removeFromSquare();
+    if zed:isAlive() then
+        zed:setAvoidDamage(false)
+        zed:changeState(ZombieOnGroundState.instance())
+        zed:setAttackedBy(getCell():getFakeZombieForHit())
+        zed:becomeCorpse()
+--[[         zed:removeFromWorld();
+        zed:removeFromSquare(); ]]
+--[[     else
+        local sq = zed:getSquare()
+        sq:removeCorpse(zed, isClient()); ]]
+    end
 end
 
 function DogZedMod.doSpawn(sq, isDown, outfit)
@@ -111,27 +162,4 @@ function DogZedMod.doLocalSpawn(sq, outfit)
 	end
 	local zed = addZombiesInOutfit(sq:getX(), sq:getY(), sq:getZ(), 1, tostring(outfit), nil, true, true, false, true, 2)
 end
-
-
-function DogZedMod.RewardHandler(zed)
-	if DogZedMod.isDogZed(zed) then
-        local int = tonumber(DogZedMod.getOutfitNum(zed))
-        local sq = zed:getSquare()
-        if sq then
-            local corpse = sq:getDeadBody()
-            if corpse then
-                local fType = nil
-                if int then
-                    fType = tostring(DogZedMod.CorpseItems[int])
-                    sq:AddWorldInventoryItem(fType, 0.5, 0.5, 0)
-                end
-                sq:removeCorpse(corpse, true)
-            end
-        end
-    end
-end
-Events.OnZombieDead.Remove(DogZedMod.RewardHandler)
-Events.OnZombieDead.Add(DogZedMod.RewardHandler)
-
-
 
