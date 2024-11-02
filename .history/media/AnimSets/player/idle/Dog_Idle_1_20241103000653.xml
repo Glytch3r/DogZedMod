@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>Dog_Idle_1</m_Name>
+	<m_AnimName>Dog_Idle_1</m_AnimName>
+
+
+<!-- 	<m_deferredBoneAxis>Y</m_deferredBoneAxis> -->
+
+	<m_DeferredBoneName>Bip01</m_DeferredBoneName>
+	<m_deferredBoneAxis>Z</m_deferredBoneAxis>
+	<m_useDeferedRotation>false</m_useDeferedRotation>
+
+	<m_SpeedScale>2</m_SpeedScale>
+	<m_BlendTime>0.4</m_BlendTime>
+	<m_BlendOutTime>0.4</m_BlendOutTime>
+
+
+	<m_Scalar>IdleSpeed</m_Scalar>
+	<m_Scalar2>IdleSpeed</m_Scalar2>
+
+	<m_2DBlends referenceID="1">
+		<m_AnimName>Dog_Idle_1</m_AnimName>
+		<m_XPos>0.00</m_XPos>
+		<m_YPos>0.00</m_YPos>
+		<m_SpeedScale>2.80</m_SpeedScale>
+	</m_2DBlends>
+	<m_2DBlends referenceID="2">
+		<m_AnimName>Dog_Idle_1</m_AnimName>
+		<m_XPos>0.00</m_XPos>
+		<m_YPos>0.00</m_YPos>
+		<m_SpeedScale>2.80</m_SpeedScale>
+	</m_2DBlends>
+	<m_2DBlends referenceID="3">
+		<m_AnimName>Dog_Idle_1</m_AnimName>
+		<m_XPos>0.00</m_XPos>
+		<m_YPos>0.04</m_YPos>
+		<m_SpeedScale>2.80</m_SpeedScale>
+	</m_2DBlends>
+	<m_2DBlendTri>
+		<node1>1</node1>
+		<node2>2</node2>
+		<node3>3</node3>
+	</m_2DBlendTri>
+	<m_Transitions>
+		<m_Target>Dog_aim_default</m_Target>
+		<m_AnimName>Dog_Walk</m_AnimName>
+		<m_blendInTime>0.1</m_blendInTime>
+		<m_speedScale>3</m_speedScale>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_defaultWalk</m_Target>
+		<m_AnimName>Dog_Walk</m_AnimName>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>3</m_speedScale>
+		<m_Conditions>
+			<m_Name>isTurningAround</m_Name>
+			<m_Type>BOOL</m_Type>
+			<m_BoolValue>false</m_BoolValue>
+		</m_Conditions>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_defaultRun</m_Target>
+		<m_AnimName>Dog_Run</m_AnimName>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>3</m_speedScale>
+		<m_Conditions>
+			<m_Name>isTurningAround</m_Name>
+			<m_Type>BOOL</m_Type>
+			<m_BoolValue>false</m_BoolValue>
+		</m_Conditions>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_defaultSprint</m_Target>
+		<m_AnimName>Dog_Run</m_AnimName>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>1</m_blendOutTime>
+		<m_speedScale>3</m_speedScale>
+		<m_Conditions>
+			<m_Name>isTurningAround</m_Name>
+			<m_Type>BOOL</m_Type>
+			<m_BoolValue>false</m_BoolValue>
+		</m_Conditions>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_climbFenceStart</m_Target>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>3</m_speedScale>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_turn_idle</m_Target>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>3</m_speedScale>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_sneakidle</m_Target>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>6</m_speedScale>
+	</m_Transitions>
+	<m_Transitions>
+		<m_Target>Dog_sneakIdleLow</m_Target>
+		<m_blendInTime>0.4</m_blendInTime>
+		<m_blendOutTime>0</m_blendOutTime>
+		<m_speedScale>6</m_speedScale>
+	</m_Transitions>
+	<m_maxTorsoTwist>180</m_maxTorsoTwist>
+
+
+
+
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_Pelvis</boneName>
+		<includeDescendants>false</includeDescendants>
+		<weight>12</weight>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_Spine</boneName>
+		<includeDescendants>false</includeDescendants>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_BackPack</boneName>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_DressFront</boneName>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_DressBack</boneName>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_L_Thigh</boneName>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_R_Thigh</boneName>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01</boneName>
+		<includeDescendants>false</includeDescendants>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Translation_Data</boneName>
+		<includeDescendants>true</includeDescendants>
+	</m_SubStateBoneWeights>
+<!-- 	<m_SubStateBoneWeights>
+		<boneName>Bip01_Prop1</boneName>
+		<weight>0.00</weight>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_Prop2</boneName>
+		<weight>0.00</weight>
+	</m_SubStateBoneWeights> -->
+	<m_Conditions>
+		<m_Name>isDogPl</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>true</m_StringValue>
+	</m_Conditions>
+</animNode>
