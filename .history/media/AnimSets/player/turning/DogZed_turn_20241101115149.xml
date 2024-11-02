@@ -12,7 +12,7 @@
 		<m_Type>BOOL</m_Type>
 		<m_BoolValue>true</m_BoolValue>
 	</m_Conditions>
-	<!-- <m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
 		<boneName>Bip01_Pelvis</boneName>
 		<includeDescendants>false</includeDescendants>
 	</m_SubStateBoneWeights>
@@ -50,7 +50,7 @@
 	<m_SubStateBoneWeights>
 		<boneName>Bip01_Prop2</boneName>
 		<weight>0.00</weight>
-	</m_SubStateBoneWeights> -->
+	</m_SubStateBoneWeights>
 	<m_Conditions>
 		<m_Name>isDogPl</m_Name>
 		<m_Type>STRING</m_Type>

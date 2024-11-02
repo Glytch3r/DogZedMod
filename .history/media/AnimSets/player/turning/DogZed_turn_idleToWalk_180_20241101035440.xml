@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_turn_walk.xml">
-	<m_Name>DogZed_turn_walk_180</m_Name>
+	<m_Name>DogZed_turn_idleToWalk_180</m_Name>
 	<m_Looped>false</m_Looped>
-	<m_EarlyTransitionOut>false</m_EarlyTransitionOut>
-<!-- 	<m_Conditions />
+	<m_SpeedScale>1.04</m_SpeedScale>
+	<m_Conditions />
 	<m_Conditions />
 	<m_Conditions />
 	<m_Conditions>
@@ -13,14 +13,16 @@
 	</m_Conditions>
 	<m_Conditions>
 		<m_Name>momentumScalar</m_Name>
-		<m_Type>GTR</m_Type>
-		<m_FloatValue>0.999</m_FloatValue>
+		<m_Type>LESS</m_Type>
+		<m_FloatValue>1</m_FloatValue>
 	</m_Conditions>
-	<m_Transitions />
+	<m_Transitions>
+		<m_Target>Dog_Walk</m_Target>
+	</m_Transitions>
 	<m_Transitions>
 		<m_Target>Dog_Idle</m_Target>
 		<m_blendInTime>0.1</m_blendInTime>
-	</m_Transitions> -->
+	</m_Transitions>
 	<m_Conditions>
 		<m_Name>isDogPl</m_Name>
 		<m_Type>STRING</m_Type>

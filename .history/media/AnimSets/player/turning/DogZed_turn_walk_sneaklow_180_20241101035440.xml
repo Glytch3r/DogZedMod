@@ -9,7 +9,7 @@
 	<m_Conditions />
 	<m_Conditions />
 	<m_Conditions />
-	<!-- <m_Conditions>
+	<m_Conditions>
 		<m_Type>GTR</m_Type>
 		<m_FloatValue>0.999</m_FloatValue>
 	</m_Conditions>
@@ -19,7 +19,7 @@
 	<m_Transitions>
 		<m_Target>Dog_sneakIdleLow</m_Target>
 		<m_blendInTime>0.1</m_blendInTime>
-	</m_Transitions> -->
+	</m_Transitions>
 	<m_Conditions>
 		<m_Name>isDogPl</m_Name>
 		<m_Type>STRING</m_Type>
