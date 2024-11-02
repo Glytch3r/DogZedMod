@@ -31,7 +31,7 @@ function DogZedMod.isPanicDisarm()
 	return SandboxVars.DogZedMod.PanicDisarm or true
 end
 
-
+isCollideZombies
 
 function DogZedMod.PanicHandler(zed)
 	local pl = getPlayer(); if not pl then return end
