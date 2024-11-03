@@ -93,7 +93,7 @@ function DogZedMod.addCooldown(zed, count)
 	Events.EveryHours.Add(HowlCDHandler)
 end
 
-function DogZedMod.playSFX(zed, sfx, isAttract)
+function DogZedMod.playSFX(zed, sfx)
 	if not DogZedMod.isDogZed(zed) then return end
 	local range = 50
 	local pl = getPlayer(); if not pl then return end
@@ -102,7 +102,7 @@ function DogZedMod.playSFX(zed, sfx, isAttract)
 		if sq then
 			local vol = DogZedMod.VolumeHandler(DogZedMod.checkDist(pl, zed), range)
 			if luautils.stringStarts(sfx, "DogZed_Howl") or string.find(sfx, "DogZed_Howl")  then
-				if SandboxVars.DogZedMod.HowlAttracts or isAttract then
+				if SandboxVars.DogZedMod.HowlAttracts then
 					addSound(zed, zed:getX(), zed:getY(), zed:getZ(), 50, vol);
 				end
 			end
