@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode x_extends="BiteFromSitting.xml">
+	<m_Name>BiteFromSittingLeft</m_Name>
+	<m_Conditions />
+	<m_Conditions>
+		<m_StringValue>BiteLEFT</m_StringValue>
+	</m_Conditions>
+
+	<m_Conditions>
+		<m_Name>isDogPl</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>true</m_StringValue>
+	</m_Conditions>
+</animNode>

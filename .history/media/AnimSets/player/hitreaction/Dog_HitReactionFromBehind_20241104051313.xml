@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode x_extends="Dog_HitReaction.xml">
+	<m_Name>Dog_HitReactionFromBehind</m_Name>
+	<m_AnimName>Dog_HitReact</m_AnimName>
+	<m_Conditions>
+		<m_Name>FromBehind</m_Name>
+		<m_Type>BOOL</m_Type>
+		<m_BoolValue>true</m_BoolValue>
+	</m_Conditions>
+</animNode>
