@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode x_extends="left.xml">
+	<m_Name>Dog_right</m_Name>
+	<m_AnimName>Dog_HitReact</m_AnimName>
+	<m_Conditions>
+		<m_StringValue>right</m_StringValue>
+	</m_Conditions>
+	<m_Conditions>
+		<m_Name>isDogPl</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>true</m_StringValue>
+	</m_Conditions>
+</animNode>
