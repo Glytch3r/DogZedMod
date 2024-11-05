@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="DogZed_crawlerattack_fail.xml">
 	<m_Name>DogZed_crawlerattack_success</m_Name>
-	<m_AnimName>Dog_Bite</m_AnimName>
-	<m_Looped>false</m_Looped>
-	<m_SpeedScale>3.40</m_SpeedScale>
-<!-- 	<m_BlendTime>0.50</m_BlendTime> -->
+	<m_AnimName>Dog_NeckBite</m_AnimName>
+	<m_SpeedScale>2.40</m_SpeedScale>
 
 <!--
 	<m_Conditions>
@@ -30,8 +28,8 @@
 		<m_ParameterValue></m_ParameterValue>
 	</m_Events>
 
-<!--
-	<m_SpeedScaleRandomMultiplierMin>0.2</m_SpeedScaleRandomMultiplierMin>
+
+<!-- 	<m_SpeedScaleRandomMultiplierMin>0.2</m_SpeedScaleRandomMultiplierMin>
 	<m_SpeedScaleRandomMultiplierMax>1.25</m_SpeedScaleRandomMultiplierMax>
 	<m_BlendTime>0.35</m_BlendTime>
 	<m_randomAdvanceFraction>0.50</m_randomAdvanceFraction>
@@ -48,8 +46,8 @@
 		<m_blendOutTime>0.5</m_blendOutTime>
 	</m_Transitions>
 
- -->
 
+ -->
 
 	<m_Conditions>
 		<m_Name>isDogZed</m_Name>

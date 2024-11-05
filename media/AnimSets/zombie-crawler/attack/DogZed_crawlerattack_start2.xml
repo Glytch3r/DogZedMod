@@ -4,9 +4,8 @@
 	<m_AnimName>Dog_StandToSit</m_AnimName>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
 	<m_Looped>false</m_Looped>
-	<m_SpeedScale>2.40</m_SpeedScale>
-	<m_BlendTime>0.51</m_BlendTime>
-
+	<m_SpeedScale>1.40</m_SpeedScale>
+	<m_BlendTime>0.50</m_BlendTime>
 <!-- 	<m_Conditions>
 		<m_Name>AnimSpeed</m_Name>
 		<m_Type>GTR</m_Type>
@@ -17,7 +16,7 @@
 
 
 
-
+<!--
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
 	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
 	<m_BlendTime>0.20</m_BlendTime>
@@ -26,7 +25,7 @@
 	</m_SubStateBoneWeights>
 	<m_SubStateBoneWeights>
 		<boneName>Translation_Data</boneName>
-	</m_SubStateBoneWeights>
+	</m_SubStateBoneWeights> -->
 
 	<m_Events>
 		<m_EventName>SetVariable</m_EventName>

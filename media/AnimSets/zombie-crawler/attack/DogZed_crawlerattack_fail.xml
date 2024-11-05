@@ -3,8 +3,8 @@
 	<m_Name>DogZed_crawlerattack_fail</m_Name>
 	<!-- <m_AnimName>Dog_Attack_1</m_AnimName> -->
 	<m_AnimName>Dog_JumpAttack</m_AnimName>
-	<m_SpeedScale>1.40</m_SpeedScale>
-
+	<m_SpeedScale>0.60</m_SpeedScale>
+	<m_BlendTime>0.51</m_BlendTime>
 	<m_Conditions>
 		<m_Name>ZombieBiteStarted</m_Name>
 		<m_Type>BOOL</m_Type>
@@ -25,4 +25,5 @@
 		<m_Type>STRING</m_Type>
 		<m_StringValue>true</m_StringValue>
 	</m_Conditions>
+	<m_EarlyBlendOut>false</m_EarlyBlendOut>
 </animNode>

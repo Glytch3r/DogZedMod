@@ -2,8 +2,8 @@
 <animNode x_extends="DogZed_crawlerattack_start2.xml">
 	<m_Name>DogZed_crawlerattack_fail2</m_Name>
 	<m_AnimName>Dog_Gesture</m_AnimName>
-	<m_SpeedScale>1.40</m_SpeedScale>
-
+	<m_SpeedScale>0.60</m_SpeedScale>
+	<m_BlendTime>0.51</m_BlendTime>
 	<m_Conditions>
 		<m_Name>ZombieBiteStarted</m_Name>
 		<m_Type>BOOL</m_Type>
