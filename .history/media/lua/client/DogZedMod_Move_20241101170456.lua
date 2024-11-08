@@ -32,7 +32,6 @@ DogZedMod = DogZedMod or {}
 function DogZedMod.isCrawler(zed)
 	return zed:isCrawling()
 end
-
 function DogZedMod.setCrawler(zed)
     if not zed:isCrawling() then
 		--zed:toggleCrawling()
@@ -47,10 +46,10 @@ function DogZedMod.setCrawler(zed)
 		end
     end
 
-	local fitNum = tonumber(DogZedMod.getOutfitCrawlType(zed))
+	local setType = DogZedMod.getOutfitCrawlType(zed)
 	local crawlType = zed:getCrawlerType()
-	if fitNum ~= crawlType and (fitNum == 1 or  fitNum == 2) then
-		zed:setCrawlerType(fitNum)
+	if setType ~= crawlType then
+		zed:setCrawlerType(setType)
 	end
 	DogZedMod.setAnimSpeed(zed, DogZedMod.getMinAnimSpeed())
 end

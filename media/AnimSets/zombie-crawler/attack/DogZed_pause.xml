@@ -4,7 +4,7 @@
 	<m_SpeedScale>0.80</m_SpeedScale>
 	<m_AnimName>Dog_Wait</m_AnimName>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
-	<m_BlendTime>0.20</m_BlendTime>
+	<m_BlendTime>1.20</m_BlendTime>
 	<m_Conditions>
 		<m_Name>targetSeenTime</m_Name>
 		<m_Type>LESS</m_Type>

@@ -31,10 +31,10 @@ DogZedMod = DogZedMod or {}
 
 function DogZedMod.setAnimSpeed(zed, int)
     if not int then
-        int = tostring(DogZedMod.getAnimSpeed(zed))
+        int = DogZedMod.getAnimSpeed(zed)
     end
-    if zed:getVariableString('AnimSpeed') ~= int then
-        zed:setVariable('AnimSpeed', int)
+    if zed:getVariableString('AnimSpeed') ~= tostring(int) then
+        zed:setVariable('AnimSpeed', tostring(int))
     end
 end
 
