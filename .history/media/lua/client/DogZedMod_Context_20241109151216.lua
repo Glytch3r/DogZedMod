@@ -49,10 +49,10 @@ function DogZedMod.Context(player, context, worldobjects)
 			opt:addSubMenu(ri, spwnRewardOpt)
 
 
-			spwnRewardOpt:addOption("x3", worldobjects, function()
+			spwnRewardOpt:addOption("x5", worldobjects, function()
+				for i = 1, 5  do
 					DogZedMod.SpawnRewards(sq)
-					DogZedMod.SpawnRewards(sq)
-					DogZedMod.SpawnRewards(sq)
+				end
 			end);
 
 			spwnRewardOpt:addOption("x1", worldobjects, function()
@@ -102,57 +102,56 @@ function DogZedMod.Context(player, context, worldobjects)
 				end
 
 			end
-			if sq then
-
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x3 [Radiated]", worldobjects, function()
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x5 [Radiated]", worldobjects, function()
+				for i = 1, 5  do
 					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-				end);
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x3 [Shadow]", worldobjects, function()
+				end
+			end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x5 [Shadow]", worldobjects, function()
+				for i = 1, 5  do
 					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
-				end);
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x3 [Clone]", worldobjects, function()
+				end
+			end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').."  x5 [Clone]", worldobjects, function()
+				for i = 1, 5  do
 					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-				end);
+				end
+			end);
 
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." ALL 3 Outfits", worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." ALL 3 Outfits", worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit0), worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-				end);
+			end);
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit0)..' X2', worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit0); DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit0), worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
+			end);
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit1), worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit0)..' X2', worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit0); DogZedMod.doSpawn(sq, false, DogZedMod.outfit0)
+			end);
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit1)..' X2', worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit1); DogZedMod.doSpawn(sq, false, DogZedMod.outfit1);
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit1), worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit1)
+			end);
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit2), worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit1)..' X2', worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit1); DogZedMod.doSpawn(sq, false, DogZedMod.outfit1);
+			end);
 
-				local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit2)..' X2', worldobjects, function()
-					DogZedMod.doSpawn(sq, false, DogZedMod.outfit2); DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
-				end);
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit2), worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
+			end);
+
+			local sIco = spwn:addOption(getText('ContextMenu_DogZedMod_Spawn').." "..tostring(DogZedMod.outfit2)..' X2', worldobjects, function()
+				DogZedMod.doSpawn(sq, false, DogZedMod.outfit2); DogZedMod.doSpawn(sq, false, DogZedMod.outfit2)
+			end);
 
 
-			end
+
 
 			local sIco2 = spwn:addOption(getText('ContextMenu_DogZedMod_KillDogZeds'), worldobjects, function()
 				local rad = 15

@@ -40,7 +40,7 @@ DogZedMod.CorpseReplacement = {
 
 
 function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) then return end
+    if not DogZedMod.isDeadDog(corpse) return end
     local tab = DogZedMod.CorpseReplacement
     local w = corpse:getWornItems()
     for i = 0, w:size() - 1 do
@@ -97,6 +97,7 @@ function DogZedMod.isDeadDog(corpse)
     if fit == DogZedMod.outfit1 then return true end
     if fit == DogZedMod.outfit2 then return true end
     if fit == DogZedMod.outfit0 then return true end
+
 	return false
 end
 

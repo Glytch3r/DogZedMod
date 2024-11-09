@@ -26,161 +26,210 @@
 █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████--]]
 
 
-
 DogZedMod = DogZedMod or {}
 
+------------------------               ---------------------------
+function DogZedMod.doRoll(percent) if percent >= ZombRand(1, 101) then return true end return false end
+-----------------------            ---------------------------
 
 
-DogZedMod.CorpseReplacement = {
-    ['Base.RadiatedDog']={["isDogCorpse"]=true, ["drop"]="Base.RadiatedDog_Dead_"},
-    ['Base.ShadowDog']={["isDogCorpse"]=true, ["drop"]="Base.ShadowDog_Dead_"},
-    ['Base.CloneDog']={["isDogCorpse"]=true, ["drop"]="Base.CloneDog_Dead_"},
-}
-
-
-
-function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) then return end
-    local tab = DogZedMod.CorpseReplacement
-    local w = corpse:getWornItems()
-    for i = 0, w:size() - 1 do
-        local item = w:getItemByIndex(i)
-        if item then
-            local fType = item:getName()
-            if fType and tab[fType] then
-                local isDogCorpse = tab[fType].isDogCorpse
-                if isDogCorpse then
-                    local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
-                    local sq = corpse:getSquare()
-                    if sq then
-                        if fType ~= "Base.CloneDog" then
-                            sq:AddWorldInventoryItem(tostring(drop), ZombRand(0, 1.5), ZombRand(0, 1.5), 0)
-                            DogZedMod.SpawnRewards(sq)
-                        end
-                        if fType == "Base.RadiatedDog" then
-                            DogZedMod.setRadiateArea(sq)
-                        end
-                        sq:removeCorpse(corpse, isClient())
-                    end
-                end
-            end
-        end
-    end
+function DogZedMod.TempMarker(sq, isGood)
+	if not sq then return end
+	local r, g, b = 1,0.4,0.4
+	if isGood then
+		r, g, b = 0.4,0.4,1
+	end
+	local mark = getWorldMarkers():addGridSquareMarker("circle_center", "circle_only_highlight", sq,r,g,b, true, 0.5)
+	TestMarkers.add(mark);
+	timer:Simple(sec, function()
+		mark:remove()
+	end)
 end
 
-function DogZedMod.CorpseCleaner()
-    local rad = 8
-    local pl = getPlayer(); if not pl then return end
-    local cell = pl:getCell()
-    local x, y, z = pl:getX(), pl:getY(), pl:getZ()
-    for xDelta = -rad, rad do
-        for yDelta = -rad, rad do
-            local sq = cell:getOrCreateGridSquare(x + xDelta, y + yDelta, z)
-            if sq then
-                local corpse = IsoObjectPicker.Instance:PickCorpse(sq:getX(), sq:getY()) or sq:getDeadBody()
-                if corpse and instanceof(corpse, "IsoDeadBody") then
-                    DogZedMod.handleCorpse(corpse)
-                end
-            end
-        end
-    end
+
+function DogZedMod.TicksSinceSeenZombie()
+    local pl = getPlayer()
+    return pl.TicksSinceSeenZombie >= 6000
 end
-Events.EveryOneMinute.Remove(DogZedMod.CorpseCleaner)
-Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
+function DogZedMod.lastSeenZombieTime()
+    local pl = getPlayer()
+    return pl.lastSeenZombieTime >= 6000
+end
+--[[
+print(zed:getVariableString("AttackDidDamage"))
+print(zed:getVariableString("ZombieBiteDone"))
+ ]]
+function DogZedMod.isBiteReact(pl)
+	local attacker = nil
+	if pl:getVariableString("HitReaction") == "Bite" then
+		local time = pl:timeSinceLastStab()
+		print(time)
+		attacker = pl:getVariableString("getLastTargettedBy")
 
+		return true
+	end
+	return false
+end
+--[[
+print(zed:getVariableString("AttackDidDamage"))
+print(zed:getVariableString("bAttack"))
+ ]]
 
-
-function DogZedMod.isDeadDog(corpse)
-	if not corpse or not instanceof(corpse, "IsoDeadBody") then return false end
-    if corpse:getModData()['DogZed_Init'] then return true end
-    local fit = tostring(corpse:getOutfitName())
-    if fit == DogZedMod.outfit1 then return true end
-    if fit == DogZedMod.outfit2 then return true end
-    if fit == DogZedMod.outfit0 then return true end
+function DogZedMod.isDogPl(pl)
+	if not pl then return false end
+	if not instanceof(pl, "IsoPlayer") then return false end
+	local wornItems = pl:getWornItems()
+	if wornItems then
+		for i=1, wornItems:size() do
+			local item = wornItems:get(i-1):getItem()
+			if item:getFullType() == DogZedMod.skin0 or item:getFullType() == DogZedMod.skin1 or item:getFullType() == DogZedMod.skin2 then
+				return true
+			end
+		end
+	end
 	return false
 end
 
 -----------------------            ---------------------------
 
-function DogZedMod.getSpawnRandomZedInfo(fit)
-    local maleOutfits = getAllOutfits(false)
-    local femaleOutfits = getAllOutfits(true)
-    local allOutfits = {}
 
-    for i = 0, maleOutfits:size() - 1 do
-        table.insert(allOutfits, maleOutfits:get(i))
-    end
-    for i = 0, femaleOutfits:size() - 1 do
-        table.insert(allOutfits, femaleOutfits:get(i))
-    end
 
-    if not fit or fit == '' then
-        fit = allOutfits[ZombRand(#allOutfits) + 1]
-    end
 
-    local outfitExists = false
-    for _, outfit in ipairs(allOutfits) do
-        if outfit == fit then
-            outfitExists = true
-            break
-        end
-    end
 
-    if not outfitExists then
-        fit = allOutfits[ZombRand(#allOutfits) + 1]
-    end
 
-    if maleOutfits:contains(fit) and femaleOutfits:contains(fit) then
-        return fit, 0
-    elseif femaleOutfits:contains(fit) then
-        return fit, 100
-    else
-        return fit, 0
+--[[
+local function getFieldVar(o, fname)
+  for i = 0, getNumClassFields(o) - 1 do
+    local f = getClassField(o, i)
+    if tostring(f) == fname then
+      return f
     end
+  end
 end
+local cognition = getFieldVar(self.dbgZed, "public int zombie.characters.IsoZombie.cognition")
+local speedType = getFieldVar(self.dbgZed, "public int zombie.characters.IsoZombie.speedType")
+strength
+ ]]
 
-function DogZedMod.doDespawn(zed)
-    if zed:isAlive() then
-        zed:setAvoidDamage(false)
-        zed:changeState(ZombieOnGroundState.instance())
-        zed:setAttackedBy(getCell():getFakeZombieForHit())
-        zed:becomeCorpse()
 
---[[         zed:removeFromWorld();
-        zed:removeFromSquare(); ]]
---[[     else
-        local sq = zed:getSquare()
-        sq:removeCorpse(zed, isClient()); ]]
-    end
-end
+function DogZedMod.setStats(zed)
+    if zed and DogZedMod.isDogZed(zed) then
+        if zed:getModData()['DogZed_Init'] == nil then
 
-function DogZedMod.doSpawn(sq, isDown, outfit)
-    if sq then
-        local x, y, z = sq:getX(), sq:getY(), sq:getZ()
-        if isClient() then
+			local sandOpt = getSandboxOptions()
+			--local zSpeed = sandOpt:getOptionByName("ZombieLore.Speed"):getValue()
 
-            local fit, fChance = DogZedMod.getSpawnRandomZedInfo()
+			local zCog = sandOpt:getOptionByName("ZombieLore.Cognition"):getValue()
+			local zTough = sandOpt:getOptionByName("ZombieLore.Toughness"):getValue()
+			local zStr = sandOpt:getOptionByName("ZombieLore.Strength"):getValue()
 
-            if outfit and outfit ~= '' then
-                fit, fChance = DogZedMod.getSpawnRandomZedInfo(outfit)
+			local zMem = sandOpt:getOptionByName("ZombieLore.Memory"):getValue()
+			local zSee = sandOpt:getOptionByName("ZombieLore.Sight"):getValue()
+			local zHear = sandOpt:getOptionByName("ZombieLore.Hearing"):getValue()
+
+			-----------------------            ---------------------------
+
+			--sandOpt:set("ZombieLore.Speed", 2) 		-- 1 sprinters  		2 fast shamblers  	3 shamblers 		4 random
+
+			sandOpt:set("ZombieLore.Strength",4)  	-- 1 superhuman 		2 normal 			3 weak 				4 random
+			sandOpt:set("ZombieLore.Toughness",2)	-- 1 tough 				2 normal 			3 fragile 			4 random
+			sandOpt:set("ZombieLore.Cognition",3) 	-- 1 navigate + doors 	2 navigate 			3 basic navigation 	4 random
+
+			sandOpt:set("ZombieLore.Memory",3) 		 --1 long 				2 normal 			3 short				4 none 			5 random
+			sandOpt:set("ZombieLore.Sight",1) 		-- 1 eagle 				2 normal 			3 poor 				4 random
+			sandOpt:set("ZombieLore.Hearing",1) 	-- 1 pinpoint 			2 normal 			3 poor 				4 random
+
+            -----------------------            ---------------------------
+			local tSpeed =  SandboxVars.DogZedMod.TurnSpeed or 1.5
+			DogZedMod.setTurnSpeed(zed, tSpeed)
+            -----------------------            ---------------------------
+
+            zed:getModData()['DogZed_Init'] = true
+            zed:setVariable('isDogZed', 'true')
+            -----------------------            ---------------------------
+
+            DogZedMod.setTag(zed)
+
+            zed:makeInactive(true);
+            zed:makeInactive(false);
+            zed:DoZombieStats()
+
+			--sandOpt:set("ZombieLore.Speed", zSpeed)
+
+            sandOpt:set("ZombieLore.Cognition", zCog)
+            sandOpt:set("ZombieLore.Toughness", zTough)
+            sandOpt:set("ZombieLore.Strength", zStr)
+
+            sandOpt:set("ZombieLore.Memory", zMem)
+            sandOpt:set("ZombieLore.Sight", zSee)
+            sandOpt:set("ZombieLore.Hearing", zHear)
+            --getSandboxOptions():toLua()
+
+            if not DogZedMod.isCrawler(zed) then
+                DogZedMod.setCrawler(zed)
             end
-            sendClientCommand('DogZedMod', 'doSpawn', {x = x, y = y, z = z, count = 1, fit = fit, fChance = fChance, isDown = isDown})
-        else
-            addZombiesInOutfit(x, y, z, 1, tostring(fit), 100, false, false, false, false, 2);
+            if DogZedMod.isRadiatedDog(zed) then DogZedMod.addHL(zed) end
         end
+    else
+        zed:clearVariable('isDogZed')
+        zed:clearVariable('AnimSpeed')
     end
 end
 
-function DogZedMod.doLocalSpawn(sq, outfit)
-	local pl = getPlayer()
-	local sq = pl:getSquare():getAdjacentSquare(pl:getDir());
+-----------------------            ---------------------------
 
-    if sq then
-        if isClient() then
-            SendCommandToServer(string.format("/createhorde2 -x %d -y %d -z %d -count %d -radius %d -crawler %s -isFallOnFront %s -isFakeDead %s -knockedDown %s -health %s -outfit %s ", sq:getX(), sq:getY(), sq:getZ(), 1, 4, tostring(true), tostring(true), tostring(false), tostring(true), tostring(2), "Overgrown"))
-            return
+
+
+function DogZedMod.setStatsToAll()
+    local zombies = getCell():getZombieList()
+    if not getCell() or not zombies then return end
+    for i = 0, zombies:size() - 1 do
+        local zed = zombies:get(i)
+        if zed and DogZedMod.isDogZed(zed) then
+			local num = DogZedMod.getDayTimeInt()
+            DogZedMod.setTag(zed, num)
+            if zed:getModData()['DogZed_Init'] ~= nil then
+				DogZedMod.setStats(zed)
+            end
         end
-	end
-    addZombiesInOutfit(x, y, z, 1, tostring(fit), 100, false, false, false, false, 2);
+    end
 end
+--------------
+function DogZedMod.isUnarmed(pl, wpn)
+	return (tostring(WeaponType.getWeaponType(pl)) == 'barehand' or (wpn and wpn:getCategories():contains("Unarmed"))) or wpn == nil
+end
+function DogZedMod.isFirearm(pl, wpn)
+	if not wpn then return false end
+	if wpn:isAimedFirearm() then return true end
+	if DogZedMod.isUnarmed(pl, wpn) then return false end
+	return wpn:getScriptItem() and wpn:getScriptItem():isRanged()
+end
+---------            ---------------------------
+
+function DogZedMod.getCol(int)
+    local defaultColor = { r=1, g=1, b=1 }
+    if not int then return defaultColor end
+
+    local colors = {
+
+        [1] = { r=1, g=0, b=0 },     -- Red
+        [2] = { r=1, g=0.5, b=0 },   -- Orange
+        [3] = { r=1, g=1, b=0 },     -- Yellow
+        [4] = { r=0, g=1, b=0 },     -- Green
+        [5] = { r=0, g=0, b=1 },     -- Blue
+        [6] = { r=0.29, g=0, b=0.51 }, -- Indigo
+        [7] = { r=0.56, g=0, b=1 },  -- Violet
+        [8] = { r=1, g=1, b=1 },      -- White
+        [9] = { r=0, g=0, b=0 },     -- Black
+    }
+
+    return colors[int] or defaultColor
+end
+
+
+-----------------------               ------------------------------
+
+
+
+-----------------------            ---------------------------
 

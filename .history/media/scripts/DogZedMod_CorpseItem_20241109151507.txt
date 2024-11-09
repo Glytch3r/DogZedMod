@@ -88,7 +88,7 @@ module Base {
 
 	item RadiatedDog_Dead_4
 	{
-        WorldStaticModel = RadiatedDog_Dead_4,
+        WorldStaticModel = RadiatedDog_Dead_5,
 	    DisplayCategory = Corpse,
 		Weight	=	20.0,
 		Type	=	Normal,
@@ -97,9 +97,9 @@ module Base {
 		RequiresEquippedBothHands = true,
 		Tags = HeavyItem,
 	}
-    item ShadowDog_Dead_4
+    item ShadowDog_Dead_5
 	{
-        WorldStaticModel = ShadowDog_Dead_4,
+        WorldStaticModel = ShadowDog_Dead_5,
 	    DisplayCategory = Corpse,
 		Weight	=	20.0,
 		Type	=	Normal,

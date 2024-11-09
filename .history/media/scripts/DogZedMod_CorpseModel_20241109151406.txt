@@ -37,6 +37,7 @@ module Base {
 
 
 
+
     model RadiatedDog_Dead_4
     {
         mesh = WorldItems/DogZed_Dead_1,

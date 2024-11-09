@@ -37,12 +37,17 @@ module Base {
 
 
 
+
     model RadiatedDog_Dead_4
     {
         mesh = WorldItems/DogZed_Dead_1,
         texture = RadiatedDog_Texture_D,
         scale = 1.2,
     }
+
+
+
+
 
 
     model ShadowDog_Dead_1

@@ -40,7 +40,7 @@ DogZedMod.CorpseReplacement = {
 
 
 function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) then return end
+    if not DogZedMod.isDeadDog(corpse) return end
     local tab = DogZedMod.CorpseReplacement
     local w = corpse:getWornItems()
     for i = 0, w:size() - 1 do
@@ -91,12 +91,13 @@ Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
 
 
 function DogZedMod.isDeadDog(corpse)
-	if not corpse or not instanceof(corpse, "IsoDeadBody") then return false end
-    if corpse:getModData()['DogZed_Init'] then return true end
-    local fit = tostring(corpse:getOutfitName())
-    if fit == DogZedMod.outfit1 then return true end
-    if fit == DogZedMod.outfit2 then return true end
-    if fit == DogZedMod.outfit0 then return true end
+	if corpse and instanceof(corpse, "IsoDeadBody") then
+		local fit = tostring(corpse:getOutfitName())
+		if fit == DogZedMod.outfit1 then return true end
+		if fit == DogZedMod.outfit2 then return true end
+		if fit == DogZedMod.outfit0 then return true end
+		if corpse:getModData()['DogZed_Init'] then return true end
+	end
 	return false
 end
 
@@ -181,6 +182,6 @@ function DogZedMod.doLocalSpawn(sq, outfit)
             return
         end
 	end
-    addZombiesInOutfit(x, y, z, 1, tostring(fit), 100, false, false, false, false, 2);
+	local zed = addZombiesInOutfit(sq:getX(), sq:getY(), sq:getZ(), 1, tostring(outfit), nil, true, true, false, true, 2)
 end
 
