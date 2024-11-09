@@ -101,6 +101,7 @@ function DogZedMod.wearDogZed(pl, int)
 	if not (getCore():getDebug() or isAdmin()) then return end
 	DogZedMod.clearDogZedSkin(pl)
 	local item = InventoryItemFactory.CreateItem(DogZedMod.skin0)
+
 	if int == 1 then
 		item = InventoryItemFactory.CreateItem(DogZedMod.skin1)
 	elseif int == 2 then
@@ -121,30 +122,19 @@ end
 
 
 -----------------------       ---------------------------
-
-
-
 function DogZedMod.clearDogZedSkin(pl)
-    local inv = pl:getInventory()
-    local skins = {DogZedMod.skin0, DogZedMod.skin1, DogZedMod.skin2}
-
-    for i = inv:getItems():size(), 1, -1 do
-        local item = inv:getItems():get(i - 1)
-        if item then
-            for _, skinType in ipairs(skins) do
-                if item:getFullType() == skinType then
-                    pl:removeWornItem(item)
-                    inv:DoRemoveItem(item)
-                    break
-                end
-            end
-        end
-    end
-
-    DogZedMod.removeTag(pl)
-    pl:setHideWeaponModel(false)
-    pl:clearWornItems()
-    pl:resetModelNextFrame()
+	local inv = pl:getInventory()
+	for i = inv:getItems():size(), 1, -1 do
+		local item = inv:getItems():get(i-1)
+		if item and (item:getFullType() == DogZedMod.skin1  or item:getFullType() == DogZedMod.skin2) then
+			pl:removeWornItem(item)
+			inv:DoRemoveItem(item)
+		end
+	end
+	DogZedMod.removeTag(pl)
+	pl:setHideWeaponModel(false)
+	pl:clearWornItems();
+	pl:resetModelNextFrame();
 end
 -----------------------            ---------------------------
 
@@ -200,8 +190,6 @@ end
 
 ---------------------
 function DogZedMod.AdminDogZed(pl)
-
-
 	if DogZedMod.isDogPl(pl) then
 		if pl:getVariableBoolean('isDogPl') == false then
 			pl:setVariable('isDogPl', 'true')

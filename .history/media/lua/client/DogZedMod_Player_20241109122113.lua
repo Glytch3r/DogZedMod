@@ -200,8 +200,6 @@ end
 
 ---------------------
 function DogZedMod.AdminDogZed(pl)
-
-
 	if DogZedMod.isDogPl(pl) then
 		if pl:getVariableBoolean('isDogPl') == false then
 			pl:setVariable('isDogPl', 'true')

@@ -101,6 +101,7 @@ function DogZedMod.wearDogZed(pl, int)
 	if not (getCore():getDebug() or isAdmin()) then return end
 	DogZedMod.clearDogZedSkin(pl)
 	local item = InventoryItemFactory.CreateItem(DogZedMod.skin0)
+
 	if int == 1 then
 		item = InventoryItemFactory.CreateItem(DogZedMod.skin1)
 	elseif int == 2 then
@@ -200,8 +201,6 @@ end
 
 ---------------------
 function DogZedMod.AdminDogZed(pl)
-
-
 	if DogZedMod.isDogPl(pl) then
 		if pl:getVariableBoolean('isDogPl') == false then
 			pl:setVariable('isDogPl', 'true')
