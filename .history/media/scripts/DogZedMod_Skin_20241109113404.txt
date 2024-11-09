@@ -1,0 +1,31 @@
+module Base {
+
+	item RadiatedDog
+	{
+		DisplayCategory = ZedDmg,
+		Type = Clothing,
+		ClothingItem = RadiatedDog,
+		BodyLocation = ZedDmg,
+		WorldRender = FALSE,
+	}
+
+	item ShadowDog
+	{
+		DisplayCategory = ZedDmg,
+		Type = Clothing,
+		ClothingItem = ShadowDog,
+		BodyLocation = ZedDmg,
+		WorldRender = FALSE,
+	}
+
+	item ShadowDog_2
+	{
+		DisplayCategory = ZedDmg,
+		Type = Clothing,
+		ClothingItem = ShadowDog_2,
+		BodyLocation = ZedDmg,
+		WorldRender = FALSE,
+	}
+
+}
+

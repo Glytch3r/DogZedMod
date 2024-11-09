@@ -1,0 +1,114 @@
+module Base {
+
+
+    item RadiatedDog_Dead_1
+	{
+        WorldStaticModel = RadiatedDog_Dead_1,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+    item ShadowDog_Dead_A_1
+	{
+        WorldStaticModel = ShadowDog_Dead_A_1,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+
+    item ShadowDog_Dead_B_1
+	{
+        WorldStaticModel = ShadowDog_Dead_B_1,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+	item RadiatedDog_Dead_2
+	{
+        WorldStaticModel = RadiatedDog_Dead_2,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+    item ShadowDog_Dead_A_2
+	{
+        WorldStaticModel = ShadowDog_Dead_A_2,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+
+    item ShadowDog_Dead_B_2
+	{
+        WorldStaticModel = ShadowDog_Dead_B_2,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+
+	item RadiatedDog_Dead_3
+	{
+        WorldStaticModel = RadiatedDog_Dead_3,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+    item ShadowDog_Dead_A_3
+	{
+        WorldStaticModel = ShadowDog_Dead_A_3,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+
+    item ShadowDog_Dead_B_3
+	{
+        WorldStaticModel = ShadowDog_Dead_B_3,
+	    DisplayCategory = Corpse,
+		Weight	=	20.0,
+		Type	=	Normal,
+		DisplayName	=	Corpse,
+		Icon = DeadPerson_MaleZombie,
+		RequiresEquippedBothHands = true,
+		Tags = HeavyItem,
+	}
+
+
+
+
+
+
+}
+

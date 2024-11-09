@@ -1,0 +1,67 @@
+module Base {
+
+
+    model RadiatedDog_Dead_1
+    {
+        mesh = WorldItems/DogZed_Dead_1,
+        texture = RadiatedDog_Texture,
+        scale = 1.2,
+    }
+
+    model ShadowDog_Dead_1
+    {
+        mesh = WorldItems/DogZed_Dead_1,
+        texture = ShadowDog_Texture_A,
+        scale = 1.2,
+    }
+
+    model CloneDog_Dead_B_1
+    {
+        mesh = WorldItems/DogZed_Dead_1,
+        texture = ShadowDog_Texture_B,
+        scale = 1.2,
+    }
+    model RadiatedDog_Dead_2
+    {
+        mesh = WorldItems/DogZed_Dead_2,
+        texture = RadiatedDog_Texture,
+        scale = 1.2,
+    }
+
+    model ShadowDog_Dead_2
+    {
+        mesh = WorldItems/DogZed_Dead_2,
+        texture = ShadowDog_Texture_A,
+        scale = 1.2,
+    }
+
+    model CloneDog_Dead_B_2
+    {
+        mesh = WorldItems/DogZed_Dead_2,
+        texture = ShadowDog_Texture_B,
+        scale = 1.2,
+    }
+    model RadiatedDog_Dead_3
+    {
+        mesh = WorldItems/DogZed_Dead_3,
+        texture = RadiatedDog_Texture,
+        scale = 1.2,
+    }
+
+    model ShadowDog_Dead_3
+    {
+        mesh = WorldItems/DogZed_Dead_3,
+        texture = ShadowDog_Texture_A,
+        scale = 1.2,
+    }
+
+    model CloneDog_Dead_B_3
+    {
+        mesh = WorldItems/DogZed_Dead_3,
+        texture = ShadowDog_Texture_B,
+        scale = 1.2,
+    }
+
+
+}
+
