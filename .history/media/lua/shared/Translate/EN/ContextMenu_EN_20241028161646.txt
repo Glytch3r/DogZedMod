@@ -2,7 +2,6 @@ ContextMenu_EN = {
 
 	ContextMenu_DogZedMod_Debug = "DogZed Debug:",
 	ContextMenu_DogZedMod_Population = "Population: ",
-	ContextMenu_DogZedMod_Reward = "Test Reward",
 	ContextMenu_DogZedMod_Spawn = "Spawn DogZed",
 	ContextMenu_DogZedMod_KillDogZeds = "Kill Nearby DogZed",
 	ContextMenu_DogZedMod_KillZeds = "Kill Non DogZed Zed",

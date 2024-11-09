@@ -40,7 +40,6 @@ DogZedMod.CorpseReplacement = {
 
 
 function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) return end
     local tab = DogZedMod.CorpseReplacement
     local w = corpse:getWornItems()
     for i = 0, w:size() - 1 do
@@ -87,20 +86,6 @@ function DogZedMod.CorpseCleaner()
 end
 Events.EveryOneMinute.Remove(DogZedMod.CorpseCleaner)
 Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
-
-
-
-function DogZedMod.isDeadDog(corpse)
-	if corpse and instanceof(corpse, "IsoDeadBody") then
-		local fit = tostring(corpse:getOutfitName())
-		if fit == DogZedMod.outfit1 then return true end
-		if fit == DogZedMod.outfit2 then return true end
-		if fit == DogZedMod.outfit0 then return true end
-		if corpse:getModData()['DogZed_Init'] then return true end
-	end
-	return false
-end
-
 -----------------------            ---------------------------
 
 function DogZedMod.getSpawnRandomZedInfo(fit)

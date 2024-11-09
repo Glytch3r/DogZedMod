@@ -44,18 +44,18 @@ function DogZedMod.Context(player, context, worldobjects)
 			Main.iconTexture = getTexture("media/ui/DogZed_Symbol.png")
 
 
-			local ri = opt:addOptionOnTop(getText('ContextMenu_DogZedMod_Reward'))
+			local ri = opt:addOptionOnTop(getText('ContextMenu_DogZedMod_Population'))
 			local spwnRewardOpt = ISContextMenu:getNew(opt)
 			opt:addSubMenu(ri, spwnRewardOpt)
 
 
-			spwnRewardOpt:addOption("x5", worldobjects, function()
+			spwnRewardOpt:addOption("Test Spawn Reward Items x5", worldobjects, function()
 				for i = 1, 5  do
 					DogZedMod.SpawnRewards(sq)
 				end
 			end);
 
-			spwnRewardOpt:addOption("x1", worldobjects, function()
+			spwnRewardOpt:addOption("Test Spawn Reward Item", worldobjects, function()
 				DogZedMod.SpawnRewards(sq)
 			end);
 

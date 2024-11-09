@@ -40,7 +40,6 @@ DogZedMod.CorpseReplacement = {
 
 
 function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) return end
     local tab = DogZedMod.CorpseReplacement
     local w = corpse:getWornItems()
     for i = 0, w:size() - 1 do
@@ -55,7 +54,6 @@ function DogZedMod.handleCorpse(corpse)
                     if sq then
                         if fType ~= "Base.CloneDog" then
                             sq:AddWorldInventoryItem(tostring(drop), ZombRand(0, 1.5), ZombRand(0, 1.5), 0)
-                            DogZedMod.SpawnRewards(sq)
                         end
                         if fType == "Base.RadiatedDog" then
                             DogZedMod.setRadiateArea(sq)
@@ -80,6 +78,7 @@ function DogZedMod.CorpseCleaner()
                 local corpse = IsoObjectPicker.Instance:PickCorpse(sq:getX(), sq:getY()) or sq:getDeadBody()
                 if corpse and instanceof(corpse, "IsoDeadBody") then
                     DogZedMod.handleCorpse(corpse)
+                    DogZedMod.SpawnRewards(sq)
                 end
             end
         end
@@ -87,20 +86,6 @@ function DogZedMod.CorpseCleaner()
 end
 Events.EveryOneMinute.Remove(DogZedMod.CorpseCleaner)
 Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
-
-
-
-function DogZedMod.isDeadDog(corpse)
-	if corpse and instanceof(corpse, "IsoDeadBody") then
-		local fit = tostring(corpse:getOutfitName())
-		if fit == DogZedMod.outfit1 then return true end
-		if fit == DogZedMod.outfit2 then return true end
-		if fit == DogZedMod.outfit0 then return true end
-		if corpse:getModData()['DogZed_Init'] then return true end
-	end
-	return false
-end
-
 -----------------------            ---------------------------
 
 function DogZedMod.getSpawnRandomZedInfo(fit)
