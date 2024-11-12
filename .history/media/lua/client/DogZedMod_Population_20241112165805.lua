@@ -66,6 +66,7 @@ function DogZedMod.getCorpseFtype(zed)
             end
         end
     end
+
     return fType
 end
 

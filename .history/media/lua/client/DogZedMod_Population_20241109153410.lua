@@ -31,7 +31,7 @@ DogZedMod = DogZedMod or {}
 
 
 
-DogZedMod.CorpseCheck = {
+DogZedMod.CorpseReplacement = {
     ['Base.RadiatedDog']={["isDogCorpse"]=true, ["drop"]="Base.RadiatedDog_Dead_"},
     ['Base.ShadowDog']={["isDogCorpse"]=true, ["drop"]="Base.ShadowDog_Dead_"},
     ['Base.CloneDog']={["isDogCorpse"]=true, ["drop"]="Base.CloneDog_Dead_"},
@@ -39,42 +39,9 @@ DogZedMod.CorpseCheck = {
 
 
 
-
-
-
-function DogZedMod.getCorpseFtype(zed)
-    local visuals = zed:getItemVisuals()
-    local fType
-    local textures = {}
-    for i = 0, visuals:size() - 1 do
-        local visual = visuals:get(i)
-        local clo = visual:getClothingItem()
-        local cloName = visual:getClothingItemName()
-
-        if cloName == "RadiatedDog" or cloName == "ShadowDog" then
-            local choice = visual:getTextureChoice()
-            local textureChoicesStr = tostring(clo:getTextureChoices())  --  userdata
-            local searchStr = tostring(cloName).."_Texture_[A-F]"
-            for texture in string.gmatch(textureChoicesStr, searchStr) do
-                table.insert(textures, texture)
-            end
-            local textName = textures[choice + 1]
-            if textName then
-				local pose = ZombRand(1,4)
-                local letter = string.upper(string.sub(textName, -1))  -- last letter
-                fType = tostring(cloName).."_Dead_"..tostring(letter)..tostring(pose)
-            end
-        end
-    end
-    return fType
-end
-
---print(getCorpseToSpawn(dbgZed))
-
-
 function DogZedMod.handleCorpse(corpse)
     if not DogZedMod.isDeadDog(corpse) then return end
-    local tab = DogZedMod.CorpseCheck
+    local tab = DogZedMod.CorpseReplacement
     local w = corpse:getWornItems()
     for i = 0, w:size() - 1 do
         local item = w:getItemByIndex(i)
@@ -83,8 +50,7 @@ function DogZedMod.handleCorpse(corpse)
             if fType and tab[fType] then
                 local isDogCorpse = tab[fType].isDogCorpse
                 if isDogCorpse then
-                    --local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
-                    local drop = DogZedMod.getCorpseFtype(corpse)
+                    local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
                     local sq = corpse:getSquare()
                     if sq then
                         if fType ~= "Base.CloneDog" then
