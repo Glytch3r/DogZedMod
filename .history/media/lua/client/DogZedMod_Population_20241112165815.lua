@@ -84,7 +84,7 @@ function DogZedMod.handleCorpse(corpse)
                 local isDogCorpse = tab[fType].isDogCorpse
                 if isDogCorpse then
                     --local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
-                    local drop = corpse:getModData()['DogZed_fType']
+                    local drop = DogZedMod.getCorpseFtype(corpse)
                     local sq = corpse:getSquare()
                     if sq then
                         if fType ~= "Base.CloneDog" then

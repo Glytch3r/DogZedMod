@@ -145,7 +145,6 @@ function DogZedMod.setStats(zed)
                 DogZedMod.setTurnSpeed(zed, tSpeed)
                 -----------------------            ---------------------------
 
-                zed:getModData()['DogZed_fType'] = DogZedMod.getCorpseFtype(zed)
                 zed:getModData()['DogZed_Init'] = true
                 zed:setVariable('isDogZed', 'true')
                 -----------------------            ---------------------------

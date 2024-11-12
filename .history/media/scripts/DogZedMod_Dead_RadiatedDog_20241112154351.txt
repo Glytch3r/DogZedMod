@@ -21,12 +21,14 @@ module Base {
         texture = RadiatedDog_Texture_C,
         scale = 1.2,
     }
+
     model RadiatedDog_Dead_D1
     {
         mesh = WorldItems/DogZed_Dead_1,
         texture = RadiatedDog_Texture_D,
         scale = 1.2,
     }
+
     model RadiatedDog_Dead_E1
     {
         mesh = WorldItems/DogZed_Dead_1,
