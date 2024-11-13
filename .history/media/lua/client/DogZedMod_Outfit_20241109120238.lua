@@ -147,9 +147,10 @@ end
 
 -----------------------     setDogZed* set*          ---------------------------
 function DogZedMod.setDogZed(zed, int)
-
 	if not DogZedMod.isDogZed(zed) then
 		local outfit = DogZedMod.outfit1
+
+
         if int == 1 then
             outfit = DogZedMod.outfit1
 		elseif int == 2 then

@@ -300,15 +300,6 @@ end)
 
  ]]
 
-
-
-
-
-
-
------------------------            ---------------------------
------------------------            ---------------------------
-
  function DogZedMod.BugPatch(pl)
 	local pl = getPlayer()
  	if not (getCore():getDebug() or isAdmin()) then return end
@@ -320,72 +311,6 @@ end)
 	pl:addLineChatElement(tostring(report))
  end
  Events.OnPlayerDeath.Add(DogZedMod.BugPatch)
-
------------------------            ---------------------------
-
-local sq = getPlayer():getSquare();
-local corpse = sq:getDeadBody()
-
---[[ corpse:reanimateNow()
-sq:removeCorpse(corpse, true)
-sq:AddWorldInventoryItem(corpse:getItem(), 0.5, 0.5, 0)
-ISInventoryPage.dirtyUI();
- ]]
-
- print(corpse)
-local msg = ""
-msg = "IsoZombie: "..tostring(instanceof(corpse, "IsoZombie"))
-msg = msg .."\n".."getOutfitName: ".. tostring(corpse:getOutfitName())
-msg = msg .."\n".."isReanimatedPlayer: ".. tostring(corpse:isReanimatedPlayer())
-print(msg)
-
-
-corpse:addLineChatElement(tostring(msg))
-
------------------------            ---------------------------
-
-local msg = ""
-local count = 0
-local rad = 8
-local pl = getPlayer()
-local cell = pl:getCell()
-local x, y, z = pl:getX(), pl:getY(), pl:getZ()
-for xDelta = -rad, rad do
-	for yDelta = -rad, rad do
-		local sq = cell:getOrCreateGridSquare(x + xDelta, y + yDelta, z)
-		count = count  + 1
-
-			local zed = sq:getZombie()
-			if zed then
-			zed:clearVariable('isDogZed')
-				zed:clearVariable('AnimSpeed')
-			--	zed:getModData()['DogZed_Init'] = nil
-				--zed:setVariable('isDogZed', 'false')
-
-				print()
-				msg = "IsoZombie: "..tostring(instanceof(zed, "IsoZombie"))
-				msg = msg .."\n".."getOutfitName: ".. tostring(zed:getOutfitName())
-				msg = msg .."\n".."isReanimatedPlayer: ".. tostring(zed:isReanimatedPlayer())
-				msg = msg .."\n".."getVariableBoolean isDogZed:  ".. tostring(zed:getVariableBoolean('isDogZed') )
-				msg = msg .."\n".."isDogZed: ".. tostring(DogZedMod.isDogZed(zed))
-				msg = msg .."\n".."DogZed_Init:  ".. tostring(zed:getModData()['DogZed_Init'])
-				--msg = msg .."\n".."isReanimatedPlayer: ".. tostring()
-				zed:addLineChatElement(tostring(msg))
-
-			end
-
-	end
-end
-
-
-
---(2 * rad + 1) ^ 2
-
-
-getVariableBoolean('isDogZed')  isDogZed
-
-
-
 
 --[[
 Events.OnPlayerDeath.Add(function(pl)
@@ -441,16 +366,11 @@ print(count)
 
 local point = getPlayer()
 local rad =8
-
-
-
 local cell = point:getCell()
-
-	local sq = getPlayer():getSquare();
-local msg = ""
+local x, y, z = point:getX(), point:getY(), point:getZ()
 for xDelta = -rad, rad do
 	for yDelta = -rad, rad do
-
+		local sq = cell:getOrCreateGridSquare(x + xDelta, y + yDelta, z)
 		for i=0, sq:getMovingObjects():size()-1 do
 			local zed = sq:getMovingObjects():get(i)
 			if zed and instanceof(zed, "IsoZombie") then
@@ -458,26 +378,16 @@ for xDelta = -rad, rad do
 
 				--local msg = (zed:getOutfitName() or "err")
 				--zed:Say(msg, 1.0, 1.0, 1.0, UIFont.Small, 30, "radio")
-				--DogZedMod.clearDogZedSkin(zed)
 
-				--local msg = ( or "err")
-				--zed:Say(tostring( instanceof(zed, "IsoZombie") ), 1.0, 1.0, 1.0, UIFont.Small, 30, "radio")
-				msg = "IsoZombie: "..tostring(instanceof(zed, "IsoZombie"))
-				msg = msg .."\n".."getOutfitName: ".. tostring(zed:getOutfitName())
-				msg = msg .."\n".."isReanimatedPlayer: ".. tostring(zed:isReanimatedPlayer())
-				zed:Say(tostring(msg), 1.0, 1.0, 1.0, UIFont.Small, 30, "radio")
-	--[[ 			for i=1,wornItems:size() do
-					local wornItem = wornItems:get(i-1)
-					local item = wornItem:getItem()
-					msg = msg .."\n".. tostring(item:getName())
-				end
-				zed:Say(tostring(msg), 1.0, 1.0, 1.0, UIFont.Small, 30, "radio") ]]
+
+				local msg = ( instanceof(zed, "IsoZombie")  or "err")
+				zed:Say(msg, 1.0, 1.0, 1.0, UIFont.Small, 30, "radio")
+
 			end
 		end
 	end
 end
 
-print(msg)
 
 
 for j=1, sq:getMovingObjects():size() do
@@ -486,63 +396,3 @@ for j=1, sq:getMovingObjects():size() do
 		print(zed:getID()..'  '..zed:getOutfitName())
 	end
 end
-
-
------------------------            ---------------------------
-
-local msg = ""
-local count = 0
-local rad = 8
-local pl = getPlayer()
-local cell = pl:getCell()
-local x, y, z = pl:getX(), pl:getY(), pl:getZ()
-for xDelta = -rad, rad do
-	for yDelta = -rad, rad do
-		local sq = cell:getOrCreateGridSquare(x + xDelta, y + yDelta, z)
-		count = count  + 1
-
-			local zed = sq:getZombie()
-			if zed then
-				zed:getModData()['DogZed_Init'] = true
-				zed:clearVariable('isDogZed')
-				zed:clearVariable('AnimSpeed')
-			--	zed:getModData()['DogZed_Init'] = nil
-				--zed:setVariable('isDogZed', 'false')
-				zed:setDressInRandomOutfit(true);
-				zed:setVariable('isDogZed', 'false')
-				zed:clearWornItems();
-				zed:resetModelNextFrame();
-				zed:setVariable('isDogPl', 'false');
-				msg = "IsoZombie: "..tostring(instanceof(zed, "IsoZombie"))
-				msg = msg .."\n".."getOutfitName: ".. tostring(zed:getOutfitName())
-				msg = msg .."\n".."isReanimatedPlayer: ".. tostring(zed:isReanimatedPlayer())
-				msg = msg .."\n".."getVariableBoolean isDogZed:  ".. tostring(zed:getVariableBoolean('isDogZed') )
-				msg = msg .."\n".."isDogZed: ".. tostring(DogZedMod.isDogZed(zed))
-				msg = msg .."\n".."DogZed_Init:  ".. tostring(zed:getModData()['DogZed_Init'])
-				--msg = msg .."\n".."isReanimatedPlayer: ".. tostring()
-
-				zed:addLineChatElement(tostring(msg))
-
-			end
-
-	end
-end
-function getPointer()
-	local sq = nil; local pl = getPlayer(); local zPos = pl:getZ()
-	local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), zPos)
-	local sq = getCell():getGridSquare(math.floor(xx), math.floor(yy), zPos)
-	if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) end
-	return sq
-end
-local sq = getPointer()
-if sq ~= nil then
-	print(sq)
-end
-
-getSoundManager():PlayWorldSound('ZombieSurprisedPlayer', getPlayer():getSquare(), 0, 5, 5, false);
-addSound(getPlayer(), getPointer():getX(),getPointer():getY(), getPointer():getZ(), 15, 1);
-
-getSoundManager():stop()
-
-getSoundManager():playUISound("GainExperienceLevel")
-getSoundManager():stopUISound()

@@ -25,204 +25,263 @@
    ░▒▓█████▓▒░     ░▒▓█▓▒░        ░▒▓█▓▒░░▒▓█▓▒░  ░▒▓███████▓▒░   ░▒▓██████▓▒░   ░▒▓█▓▒░ ░▒▓█▓▒░  ░▒▓███████▓▒░    ░▒▓███████▓▒░
 █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████--]]
 
-require "lua_timers"
 
 DogZedMod = DogZedMod or {}
+local Commands = {};
+Commands.DogZedMod = {};
 
-DogZedMod.outfit0 = "RadiatedDog"
-DogZedMod.outfit1 = "ShadowDog"
-DogZedMod.outfit2 = "CloneDog"
-
-
-function DogZedMod.isDogZed(zed, isPhysical)
-    if not zed or not instanceof(zed, "IsoZombie") then
-        return false
-    end
-
-    local fit = tostring(zed:getOutfitName())
-
-    if isPhysical ~= false then
-        if fit == DogZedMod.outfit0 or fit == DogZedMod.outfit1 then
-            return true
-        end
-    end
-
-    return fit == DogZedMod.outfit2 and not isPhysical
-end
-
-
-function DogZedMod.setOutfit(zed, outfitNum)
-    local wearNum = DogZedMod.getOutfitNum(zed)
-    if wearNum ~= outfitNum then
-        if outfitNum == 1 then
-            zed:dressInNamedOutfit(DogZedMod.outfit1)
-        elseif outfitNum == 2 then
-            zed:dressInNamedOutfit(DogZedMod.outfit2)
-        elseif outfitNum == 0 then
-            zed:dressInNamedOutfit(DogZedMod.outfit0)
-        end
-        zed:resetModelNextFrame()
-		DogZedMod.setTag(zed, outfitNum)
-    end
-end
-
-
------------------------ get*           ---------------------------
-function DogZedMod.getOutfitNum(zed)
-	if not zed then return nil end
-	local fit = tostring(zed:getOutfitName())
-	if fit == DogZedMod.outfit0 then return 0 end
-	if fit == DogZedMod.outfit1 then return 1 end
-	if fit == DogZedMod.outfit2 then return 2 end
-	return nil
-end
-
-
-
-function DogZedMod.getOutfitName(zed)
-	if not zed then return nil end
-	local fit = tostring(zed:getOutfitName())
-	if fit == DogZedMod.outfit0 then return "RadiatedDog" end
-	if fit == DogZedMod.outfit1 then return "ShadowDog" end
-	if fit == DogZedMod.outfit2 then return "CloneDog" end
-	return nil
-end
-
-function DogZedMod.getOutfitCrawlType(zed)
-	if not zed then return nil end
-	local fit = tostring(zed:getOutfitName())
-	if fit == DogZedMod.outfit0 then return 1 end
-	if fit == DogZedMod.outfit1 then return 1 end
-	if fit == DogZedMod.outfit2 then return 2 end
-	return nil
-end
-
-
-
-
-
-
-function DogZedMod.isOutfitNum(zed, int)
-	if not zed then return false end
-	local fit = tostring(zed:getOutfitName())
-	if int == 1 then
-		if fit == DogZedMod.outfit1 then return true end
-	elseif int == 2 then
-		if fit == DogZedMod.outfit2 then return true end
-	elseif int == 0 then
-		if fit == DogZedMod.outfit0 then return true end
-	end
-	return false
-end
+DogZedMod.skin0 = 'Base.RadiatedDog'
+DogZedMod.skin1 = 'Base.ShadowDog'
+DogZedMod.skin2 = 'Base.CloneDog'
 
 -----------------------            ---------------------------
---[[
-local num = DogZedMod.getOutfitNum(zed)
-if num == 0 then
-    AnimSpeed =  tonumber(DogZedMod.getRadiatedDogAnimSpeed())
-else
-    AnimSpeed =  tonumber(DogZedMod.getShadowDogAnimSpeed())
-end
- ]]
------------------------     is*       ---------------------------
---DogZedMod.setCrawler(dbgZed)
-
-function DogZedMod.isRadiatedDog(zed)
-	if not zed then return false end
-	return tostring(zed:getOutfitName()) == DogZedMod.outfit0
-end
-function DogZedMod.isShadowDog(zed)
-	if not zed then return false end
-	return tostring(zed:getOutfitName()) == DogZedMod.outfit1
-end
-function DogZedMod.isShadowClone(zed)
-	if not zed then return false end
-	return tostring(zed:getOutfitName()) == DogZedMod.outfit2
-end
-
-function DogZedMod.isPhysicalDog(zed)
-	if not zed then return false end
-	return DogZedMod.isShadowClone(zed)
-end
-
------------------------     setDogZed* set*          ---------------------------
-function DogZedMod.setDogZed(zed, int)
-
-	if not DogZedMod.isDogZed(zed) then
-		local outfit = DogZedMod.outfit1
-        if int == 1 then
-            outfit = DogZedMod.outfit1
-		elseif int == 2 then
-			outfit = DogZedMod.outfit2
-        elseif int == 0 then
-            outfit = DogZedMod.outfit0
-		end
-		zed:dressInNamedOutfit(outfit)
-		--zed:DoZombieInventory()
-		zed:resetModelNextFrame()
-		DogZedMod.setTag(zed, int)
-		DogZedMod.setStats(zed)
-	end
-end
-
-
-
-
-function DogZedMod.getFitGender(fit)
-    local maleOutfits = getAllOutfits(false)
-    local femaleOutfits = getAllOutfits(true)
-    local allOutfits = {}
-
-    for i = 0, maleOutfits:size() - 1 do
-        table.insert(allOutfits, maleOutfits:get(i))
-    end
-    for i = 0, femaleOutfits:size() - 1 do
-        table.insert(allOutfits, femaleOutfits:get(i))
-    end
-
-    if not fit or fit == '' then
-        fit = allOutfits[ZombRand(#allOutfits) + 1]
-    end
-
-    local outfitExists = false
-    for _, outfit in ipairs(allOutfits) do
-        if outfit == fit then
-            outfitExists = true
+function DogZedMod.getTargetedZombie(pl)
+    local zombies = getCell():getZombieList()
+    local targetedZombie = nil
+    for i = 0, zombies:size() - 1 do
+        local zed = zombies:get(i)
+		if DogZedMod.isTarg(pl, zed) then
+            targetedZombie = zed
             break
         end
     end
 
-    if not outfitExists then
-        return nil
+    return targetedZombie
+end
+
+
+function DogZedMod.getDistanceBetween(pl, zed)
+    local plX, plY = pl:getX(), pl:getY()
+    local zedX, zedY = zed:getX(), zed:getY()
+    return math.sqrt((plX - zedX) ^ 2 + (plY - zedY) ^ 2)
+end
+
+function DogZedMod.getFov()
+    return SandboxVars.DogZedMod.FOV or 50
+end
+
+function DogZedMod.isTarg(pl, targ)
+	local fov = DogZedMod.getFov()
+    local plX, plY = pl:getX(), pl:getY()
+    local targX, targY = targ:getX(), targ:getY()
+
+    local targDirX = targX - plX
+    local targDirY = targY - plY
+
+	--print(pl:getDotWithForwardDirection(targ:getX(), targ:getY()))
+	--local fVec = pl:getForwardDirection()
+
+	 local aimAngle = pl:getLookAngleRadians()
+
+	--local angle = pl:getDirectionAngle()
+    local angle = math.atan2(targDirY, targDirX)
+
+    local angleDiff = math.abs(aimAngle - angle)
+
+
+    if angleDiff > math.pi then
+        angleDiff = 2 * math.pi - angleDiff
     end
-	local isFemale = false
-    if maleOutfits:contains(fit) and femaleOutfits:contains(fit) then
-		if 1 == ZombRand(0, 2) then
-			isFemale = true
+
+    local fovInRadians = math.rad(fov) / 2
+
+	--print(angleDiff)
+	--print(fovInRadians)
+
+	--print(angle)
+
+    return angleDiff <= fovInRadians
+end
+
+------------------------    pl*           ----------
+
+--	local num = DogZedMod.getDayTimeInt()
+-----------------------    wear*        ---------------------------
+function DogZedMod.wearDogZed(pl, int)
+	if not (getCore():getDebug() or isAdmin()) then return end
+	DogZedMod.clearDogZedSkin(pl)
+	local item = InventoryItemFactory.CreateItem(DogZedMod.skin0)
+	if int == 1 then
+		item = InventoryItemFactory.CreateItem(DogZedMod.skin1)
+	elseif int == 2 then
+		item = InventoryItemFactory.CreateItem(DogZedMod.skin2)
+	end
+
+
+	local inv = pl:getInventory()
+	local equip = inv:addItem(item);
+	pl:setWornItem(equip:getBodyLocation(), equip);
+	DogZedMod.setTag(pl, int)
+	if not pl:isHideWeaponModel() then pl:setHideWeaponModel(true) end
+	triggerEvent("OnClothingUpdated", pl)
+	pl:resetModelNextFrame();
+end
+
+-----------------------            ---------------------------
+
+
+-----------------------       ---------------------------
+
+
+
+function DogZedMod.clearDogZedSkin(pl)
+    local inv = pl:getInventory()
+    local skins = {DogZedMod.skin0, DogZedMod.skin1, DogZedMod.skin2}
+
+    for i = inv:getItems():size(), 1, -1 do
+        local item = inv:getItems():get(i - 1)
+        if item then
+            for _, skinType in ipairs(skins) do
+                if item:getFullType() == skinType then
+                    pl:removeWornItem(item)
+                    inv:DoRemoveItem(item)
+                    break
+                end
+            end
+        end
+    end
+
+    DogZedMod.removeTag(pl)
+    pl:setHideWeaponModel(false)
+    pl:clearWornItems()
+    pl:resetModelNextFrame()
+end
+-----------------------            ---------------------------
+
+
+function DogZedMod.wpnHide(pl, wpn)
+	local bool = true
+	if DogZedMod.isDogPl(pl) then
+		bool = true
+	else
+		bool = false
+	end
+
+
+	pl:setHideWeaponModel(bool)
+	JoypadState.disableGrab = bool;
+	JoypadState.disableYInventory = bool;
+	JoypadState.disableClimbOver = bool;
+	JoypadState.disableSmashWindow = bool;
+	JoypadState.disableReload = bool;
+	ISBackButtonWheel.disableCrafting = bool;
+	ISBackButtonWheel.disableMoveable = bool;
+	pl:setIgnoreAutoVault(bool);
+
+
+end
+Events.OnEquipPrimary.Add(DogZedMod.wpnHide)
+Events.OnEquipSecondary.Add(DogZedMod.wpnHide)
+-----------------------            ---------------------------
+function DogZedMod.getAdminSkinNum(pl)
+	if not pl then return end
+	if not instanceof(pl, "IsoPlayer") then return false end
+	if not DogZedMod.isDogPl(pl) then return end
+	local wornItems = pl:getWornItems()
+	if wornItems then
+		for i=1, wornItems:size() do
+			local item = wornItems:get(i-1):getItem()
+			if item:getFullType() == DogZedMod.skin0 then
+				return 0
+			elseif item:getFullType() == DogZedMod.skin1 then
+				return 1
+			elseif  item:getFullType() == DogZedMod.skin2 then
+				return 2
+			end
 		end
-    elseif femaleOutfits:contains(fit) and not maleOutfits:contains(fit) then
-		isFemale = true
-    elseif not femaleOutfits:contains(fit) and maleOutfits:contains(fit) then
-		isFemale = false
-    end
-	return isFemale
+	end
+	return nil
 end
 
---[[ function DogZedMod.FitHandler(zed)
-    if not zed then return end
-	if not DogZedMod.isDogZed(zed) then return end
-
-    if DogZedMod.isNight() then
-        if DogZedMod.isRadiatedDog(zed) then
-            DogZedMod.setOutfit(zed, 2)
-        end
-    elseif DogZedMod.isDay() then
-        if DogZedMod.isShadowDog(zed) then
-            DogZedMod.setOutfit(zed, 1)
-        end
-    end
-	--DogZedMod.setStats(zed)
+-----------------------            ---------------------------
+function DogZedMod.isUnarmed(pl, wpn)
+	return (tostring(WeaponType.getWeaponType(pl)) == 'barehand' or (wpn and wpn:getCategories():contains("Unarmed"))) or wpn == nil
 end
-Events.OnZombieUpdate.Remove(DogZedMod.FitHandler)
-Events.OnZombieUpdate.Add(DogZedMod.FitHandler)
+
+---------------------
+function DogZedMod.AdminDogZed(pl)
+
+
+	if DogZedMod.isDogPl(pl) then
+		if pl:getVariableBoolean('isDogPl') == false then
+			pl:setVariable('isDogPl', 'true')
+			if not pl:isHideWeaponModel() then pl:setHideWeaponModel(true) end
+			if isClient() then
+				sendClientCommand('DogZedMod', 'isDogPl', {isDogPl = true})
+			end
+		end
+	else
+		if pl:getVariableBoolean('isDogPl') == true then
+			pl:setVariable('isDogPl', 'false');
+			if pl:isHideWeaponModel() then pl:setHideWeaponModel(false) end
+			if isClient() then
+				sendClientCommand('DogZedMod', 'isDogPl', {isDogPl = false})
+			end
+		end
+	end
+
+end
+
+Events.OnPlayerUpdate.Remove(DogZedMod.AdminDogZed)
+Events.OnPlayerUpdate.Add(DogZedMod.AdminDogZed)
+
+
+--[[
+function DogZedMod.AimHandler(pl)
+
+	if pl:isAimKeyDown() then
+		local zed = DogZedMod.getTargetedZombie(pl)
+		if zed then
+			if DogZedMod.isCrying(zed) and DogZedMod.isDogZed(zed) then
+				if SandboxVars.DogZedMod.PlayerSympathy then
+					if zed:isShootable() then
+						zed:setShootable(false)
+						--print(zed:isShootable())
+					end
+					pl:setIgnoreAimingInput(true)
+					pl:nullifyAiming()
+				end
+			end
+		end
+	else
+		pl:setIgnoreAimingInput(false)
+	end
+end
+Events.OnPlayerUpdate.Remove(DogZedMod.AimHandler)
+Events.OnPlayerUpdate.Add(DogZedMod.AimHandler)
+
  ]]
+
+--[[
+
+function DogZedMod.OnKeyKeepPressed(key)
+	local pl = getPlayer()
+	if key == getCore():getKey("Aim") then
+		print(getCore():getKey("Aim"))
+		getPlayer():setHaloNote(tostring('test'),150,250,150,900)
+		local zed = DogZedMod.getTargetedZombie(pl)
+		if zed then
+			if DogZedMod.isDogZed(zed) then
+				pl:nullifyAiming()
+			else
+
+			end
+		else
+
+		end
+	end
+	return key
+end
+Events.OnKeyKeepPressed.Remove(DogZedMod.OnKeyKeepPressed)
+Events.OnKeyKeepPressed.Add(DogZedMod.OnKeyKeepPressed)
+
+
+ ]]
+function DogZedMod.OnLoad()
+	local pl = getPlayer(); if not pl then return end
+	pl:setIgnoreAimingInput(false)
+	if not DogZedMod.isDogPl(pl) then
+		pl:setHideWeaponModel(false)
+	end
+end
+Events.OnLoad.Add(DogZedMod.OnLoad)
