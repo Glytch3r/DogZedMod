@@ -19,17 +19,23 @@
 
 require 'NPCs/ZombiesZoneDefinition'
 
-MapSymbolDefinitions.getInstance():addTexture("DogZed", "media/ui/LootableMaps/DogZed_Symbol.png")
 DogZedMod = DogZedMod or {}
+MapSymbolDefinitions.getInstance():addTexture("DogZed", "media/ui/LootableMaps/DogZed_Symbol.png")
+
+DogZedMod.outfit0 = "RadiatedDog"
+DogZedMod.outfit1 = "ShadowDog"
+DogZedMod.outfit2 = "CloneDog"
 
 
 Events.OnPostDistributionMerge.Add(function()
-   local rate = SandboxVars.DogZedMod.SpawnRate or 2
-   if rate == 0 then return end
-   --chanceToSpawn=0,
-    table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit0, chance=rate, });
-    table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit1, chance=rate, });
-    table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit2, chance=rate, });
+   local rate = SandboxVars.DogZedMod.SpawnRateA or 1
+   table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit0, chance=rate, });
+
+   local rate = SandboxVars.DogZedMod.SpawnRateB or 1
+   table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit1, chance=rate, });
+
+   local rate = SandboxVars.DogZedMod.SpawnRateC or 1
+   table.insert(ZombiesZoneDefinition.Default,{name = DogZedMod.outfit2, chance=rate, });
 end)
 
 

@@ -33,7 +33,7 @@ DogZedMod.outfit0 = "RadiatedDog"
 DogZedMod.outfit1 = "ShadowDog"
 DogZedMod.outfit2 = "CloneDog"
 
-
+--[[
 function DogZedMod.isDogZed(zed, isPhysical)
     if not zed or not instanceof(zed, "IsoZombie") then
         return false
@@ -49,6 +49,16 @@ function DogZedMod.isDogZed(zed, isPhysical)
 
     return fit == DogZedMod.outfit2 and not isPhysical
 end
+ ]]
+
+function DogZedMod.isDogZed(zed)
+    if not (zed or instanceof(zed, "IsoZombie")) then return false end
+    return DogZedMod.isShadowDog(zed) or  DogZedMod.isShadowClone(zed) or DogZedMod.isRadiatedDog(zed)
+end
+
+
+
+
 
 
 function DogZedMod.setOutfit(zed, outfitNum)

@@ -66,7 +66,6 @@ function DogZedMod.hitZed(zed, pl, part, wpn)
 	end
 
 
-
 	local absorb =  DogZedMod.getAbsorbDmgChance()
 	zed:setAvoidDamage(absorb)
 	if absorb then

@@ -35,7 +35,7 @@ Commands.DogZedMod = {};
 
 Commands.DogZedMod.isDogZed = function(player, args)
     local playerId = player:getOnlineID();
-    sendServerCommand('DogZed', 'isDogZed', {id = playerId, isDogZed = args.isDogZed,  zedID = args.zedID})
+    sendServerCommand('DogZed', 'isDogZed', {id = playerId, isDogZed = args.isDogZed,AnimSpeed = args.AnimSpeed,   zedID = args.zedID})
 end
 
 

@@ -35,7 +35,7 @@ end
 
 function DogZedMod.setCrawler(zed)
     if not zed:isCrawling() then
-		--zed:toggleCrawling()
+		zed:toggleCrawling()
 		if not zed:isCrawling() then
 			--zed:setFallOnFront(true)
 			zed:knockDown(true)
@@ -43,8 +43,8 @@ function DogZedMod.setCrawler(zed)
 		zed:setCanWalk(false)
 		if not zed:isCrawling() then
 			zed:setVariable('bbecomecrawler', 'true')
-			zed:setCanCrawlUnderVehicle(true)
 		end
+		zed:setCanCrawlUnderVehicle(true)
     end
 
 	local fitNum = tonumber(DogZedMod.getOutfitCrawlType(zed))
@@ -229,6 +229,19 @@ function DogZedMod.checkWalkableSq()
 		end
 	end
 end
+
+function DogZedMod.moveToXYZ(zed, x, y, z)
+	--zed:pathToLocation(x, y, z)
+	zed:getPathFindBehavior2():pathToLocation(x, y, z)
+	local sq = getCell():getOrCreateGridSquare(x, y, z)
+	if not sq:TreatAsSolidFloor() and sq:getZ() == zed:getZ() then
+		zed:setVariable("bPathfind", false)
+		zed:setVariable("bMoving", true)
+	end
+	--zed:faceLocation(x, y);
+end
+
+
 
 --[[
 function DogZedMod.isShouldChangeWalkNum(zed)

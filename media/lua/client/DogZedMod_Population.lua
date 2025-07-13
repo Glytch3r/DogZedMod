@@ -73,28 +73,29 @@ end
 
 
 function DogZedMod.handleCorpse(corpse)
-    if not DogZedMod.isDeadDog(corpse) then return end
-    local tab = DogZedMod.CorpseCheck
-    local w = corpse:getWornItems()
-    for i = 0, w:size() - 1 do
-        local item = w:getItemByIndex(i)
-        if item then
-            local fType = item:getName()
-            if fType and tab[fType] then
-                local isDogCorpse = tab[fType].isDogCorpse
-                if isDogCorpse then
-                    --local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
-                    local drop = corpse:getModData()['DogZed_fType']
-                    local sq = corpse:getSquare()
-                    if sq then
-                        if fType ~= "Base.CloneDog" then
-                            sq:AddWorldInventoryItem(tostring(drop), ZombRand(0, 1.5), ZombRand(0, 1.5), 0)
-                            DogZedMod.SpawnRewards(sq)
+    if  DogZedMod.isDeadDog(corpse) or corpse:getModData()['DogZed_fType']  then
+        local tab = DogZedMod.CorpseCheck
+        local w = corpse:getWornItems()
+        for i = 0, w:size() - 1 do
+            local item = w:getItemByIndex(i)
+            if item then
+                local fType = item:getName()
+                if fType and tab[fType] then
+                    local isDogCorpse = tab[fType].isDogCorpse
+                    if isDogCorpse then
+                        --local drop = tostring(tab[fType].drop)..tostring(ZombRand(1,5))
+                        local drop = corpse:getModData()['DogZed_fType']
+                        local sq = corpse:getSquare()
+                        if sq then
+                            if fType ~= "Base.CloneDog" then
+                                sq:AddWorldInventoryItem(tostring(drop), ZombRand(0, 1.5), ZombRand(0, 1.5), 0)
+                                DogZedMod.SpawnRewards(sq)
+                            end
+                            if fType == "Base.RadiatedDog" then
+                                DogZedMod.setRadiateArea(sq)
+                            end
+                            sq:removeCorpse(corpse, isClient())
                         end
-                        if fType == "Base.RadiatedDog" then
-                            DogZedMod.setRadiateArea(sq)
-                        end
-                        sq:removeCorpse(corpse, isClient())
                     end
                 end
             end
@@ -121,7 +122,6 @@ function DogZedMod.CorpseCleaner()
 end
 Events.EveryOneMinute.Remove(DogZedMod.CorpseCleaner)
 Events.EveryOneMinute.Add(DogZedMod.CorpseCleaner)
-
 
 
 function DogZedMod.isDeadDog(corpse)
@@ -218,3 +218,57 @@ function DogZedMod.doLocalSpawn(sq, outfit)
     addZombiesInOutfit(x, y, z, 1, tostring(fit), 100, false, false, false, false, 2);
 end
 
+
+function DogZedMod.getPackAlpha()
+    local cell = getPlayer():getCell()
+    local zombies = cell:getZombieList()
+    if zombies:isEmpty() then return nil end
+
+    local lowestZombie = nil
+    local lowestNumber = math.huge
+
+    for i = 0, zombies:size() - 1 do
+        local zed = zombies:get(i)
+        if DogZedMod.isDogZed(zed) then
+            local zombieID = zed:getOnlineID()
+            local zombieNumber = zombieID
+            if zombieNumber < lowestNumber then
+                lowestNumber = zombieNumber
+                lowestZombie = zed
+            end
+        end
+    end
+
+    return lowestZombie
+end
+
+
+function DogZedMod.AlphaFollower(zed)
+    if not SandboxVars.DogZedMod.PackMentality  then return end
+    if not DogZedMod.isDogZed(zed) then return end
+    if not DogZedMod.isClosestPl(getPlayer(), zed) then return end
+    local alpha = DogZedMod.getPackAlpha()
+    if not alpha then return end
+    if alpha == zed then return end
+    local x, y, z = round(alpha:getX()),  round(alpha:getY()),  alpha:getZ()
+    if not DogZedMod.isAggro(zed)  then
+        if DogZedMod.getDistanceBetween(alpha, zed) > 12 then
+            DogZedMod.moveToXYZ(zed, x, y, z)
+            if getCore():getDebug() then
+                zed:addLineChatElement('following alpha')
+            end
+        else
+            if DogZedMod.getDistanceBetween(alpha, zed) <= 3 then
+                local randX = x + ZombRand(-4, 4)
+                local randY = y + ZombRand(-4, 4)
+
+                DogZedMod.stopWalking(zed)
+                DogZedMod.moveToXYZ(zed, randX, randY, z)
+
+            end
+                --zed:faceLocation(x, y);
+        end
+    end
+end
+Events.OnZombieUpdate.Remove(DogZedMod.AlphaFollower)
+Events.OnZombieUpdate.Add(DogZedMod.AlphaFollower)

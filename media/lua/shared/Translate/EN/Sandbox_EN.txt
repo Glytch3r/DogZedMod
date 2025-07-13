@@ -5,10 +5,12 @@ Sandbox_EN = {
 
     Sandbox_DogZedMod = "Dog Zed Mod ",
 
+	Sandbox_DogZedMod_PackMentality = "Pack Mentality",
+	Sandbox_DogZedMod_PackMentality_tooltip  = "Dog Zeds Follows Pack Leader",
+
 	Sandbox_DogZedMod_EffectsDecay = "Effects Decay",
 	Sandbox_DogZedMod_EffectsDecay_tooltip  = "Visual effects duration. Set to 0 to turn off feature",
 
-	Sandbox_DogZedMod_TurnSpeed = "Turn Speed",
 
 	Sandbox_DogZedMod_HowlAttracts = "Howl Attracts",
 	Sandbox_DogZedMod_HowlAttracts_tooltip  = "Howl Attract other Zeds",

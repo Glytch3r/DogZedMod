@@ -115,9 +115,9 @@ strength
 function DogZedMod.setStats(zed)
     if zed then
         if zed:isReanimatedPlayer() then
-
             return
         end
+
         if DogZedMod.isDogZed(zed) then
             if zed:getModData()['DogZed_Init'] == nil then
 
@@ -145,12 +145,13 @@ function DogZedMod.setStats(zed)
                 sandOpt:set("ZombieLore.Hearing",1) 	-- 1 pinpoint 			2 normal 			3 poor 				4 random
 
                 -----------------------            ---------------------------
-                local tSpeed =  SandboxVars.DogZedMod.TurnSpeed or 1.5
-                DogZedMod.setTurnSpeed(zed, tSpeed)
+      --[[           local tSpeed =  SandboxVars.DogZedMod.TurnSpeed or 1.5
+                if tSpeed then
+                    DogZedMod.setTurnSpeed(zed, tSpeed)
+                end ]]
                 -----------------------            ---------------------------
 
                 zed:getModData()['DogZed_fType'] = DogZedMod.getCorpseFtype(zed)
-                zed:getModData()['DogZed_Init'] = true
                 zed:setVariable('isDogZed', 'true')
                 -----------------------            ---------------------------
 
@@ -171,21 +172,20 @@ function DogZedMod.setStats(zed)
                 sandOpt:set("ZombieLore.Hearing", zHear)
                 --getSandboxOptions():toLua()
 
-                if not DogZedMod.isCrawler(zed) then
-                    DogZedMod.setCrawler(zed)
-                end
+
+                DogZedMod.setCrawler(zed)
+                --zed:dressInPersistentOutfit()
                 if DogZedMod.isRadiatedDog(zed) then DogZedMod.addHL(zed) end
+                zed:getModData()['DogZed_Init'] = true
             end
-        else
-            zed:clearVariable('isDogZed')
-            zed:clearVariable('AnimSpeed')
+
         end
     end
 end
 
 -----------------------            ---------------------------
 
-
+--[[
 
 function DogZedMod.setStatsToAll()
     local zombies = getCell():getZombieList()
@@ -200,7 +200,7 @@ function DogZedMod.setStatsToAll()
             end
         end
     end
-end
+end ]]
 --------------
 function DogZedMod.isUnarmed(pl, wpn)
 	return (tostring(WeaponType.getWeaponType(pl)) == 'barehand' or (wpn and wpn:getCategories():contains("Unarmed"))) or wpn == nil

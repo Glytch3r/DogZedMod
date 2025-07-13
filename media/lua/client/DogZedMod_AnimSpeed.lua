@@ -31,23 +31,26 @@ DogZedMod = DogZedMod or {}
 
 function DogZedMod.setAnimSpeed(zed, int)
     if not int then
-        int = tostring(DogZedMod.getAnimSpeed(zed))
+        int = DogZedMod.getAnimSpeed(zed)
     end
-    if zed:getVariableString('AnimSpeed') ~= int then
-        zed:setVariable('AnimSpeed', int)
+    if zed:getVariableString('AnimSpeed') ~= tostring(int) then
+        zed:setVariable('AnimSpeed', tonumber(int))
     end
 end
 
+
+function DogZedMod.isZedOwner(user)
+	if not user then user = getPlayer():getUsername() end
+	local zInfo = getZombieInfo(zed)
+	return zInfo.owner == user
+end
 function DogZedMod.isDataSender(zed)
-    if not DogZedMod.isAggro(zed) then
-        return false
-    else
-        local targ = zed:getTarget()
-        if targ == getPlayer() and zed:isTargetVisible() then
-            return true
-        end
+    if DogZedMod.isAggro(zed) then
+        return zed:getTarget() == getPlayer()
     end
 end
+
+-- zed:isTargetVisible()
 
 function DogZedMod.getAnimSpeed(zed)
     local min = DogZedMod.getMinAnimSpeed()

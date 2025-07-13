@@ -73,6 +73,7 @@ function DogZedMod.doHowl(zed)
 	if not cd then
 		DogZedMod.addCooldown(zed, 3)
 		DogZedMod.playSFX(zed, DogZedMod.getHowlSfx())
+
 	end
 end
 
@@ -93,24 +94,32 @@ function DogZedMod.addCooldown(zed, count)
 	Events.EveryHours.Add(HowlCDHandler)
 end
 
+
+function DogZedMod.getBarkSfx()
+	return 'DogZed_Bark_'..tostring(ZombRand(1,7))
+end
 function DogZedMod.playSFX(zed, sfx, isAttract)
 	if not DogZedMod.isDogZed(zed) then return end
 	local range = 50
 	local pl = getPlayer(); if not pl then return end
-	if DogZedMod.isClosestPl(pl, zed) or pl == zed then
-		local sq = zed:getSquare()
-		if sq then
-			local vol = DogZedMod.VolumeHandler(DogZedMod.checkDist(pl, zed), range)
-			if luautils.stringStarts(sfx, "DogZed_Howl") or string.find(sfx, "DogZed_Howl")  then
-				if SandboxVars.DogZedMod.HowlAttracts or isAttract then
-					addSound(zed, zed:getX(), zed:getY(), zed:getZ(), 50, vol);
-				end
+	if isClient() then
+		if DogZedMod.isClosestPl(pl, zed) or pl == zed then
+			local sq = zed:getSquare()
+			if sq then
+				local vol = DogZedMod.VolumeHandler(DogZedMod.checkDist(pl, zed), range)
+				getSoundManager():PlayWorldSound(tostring(sfx), sq, 0, 50, vol, false);
 			end
-			getSoundManager():PlayWorldSound(tostring(sfx), sq, 0, 50, vol, false);
 		end
+	else
+		pl:playSoundLocal(sfx)
+	end
+	if luautils.stringStarts(sfx, "DogZed_Howl") then
+		pl:getStats():setPanic(100)
+	end
+	if SandboxVars.DogZedMod.HowlAttracts or isAttract then
+		addSound(zed, zed:getX(), zed:getY(), zed:getZ(), 50, 10);
 	end
 end
-
 
 
 DogZedMod.sfxBanList = {

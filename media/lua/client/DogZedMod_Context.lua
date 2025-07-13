@@ -25,6 +25,26 @@ Discord: Glytch3r#1337 / glytch3r
 DogZedMod = DogZedMod or {}
 
 
+function DogZedMod.clipInfoZ(zed)
+
+	local zInfo = getZombieInfo(zed)
+	local res = tostring(zed:getOutfitName() )
+	res = res ..'\nRealX: '..tostring(zInfo.RealX)
+	res = res ..'\nRealY: '..tostring(zInfo.RealY)
+	res = res ..'\nX: '..tostring(zInfo.X)
+	res = res ..'\nY: '..tostring(zInfo.Y)
+	res = res ..'\nTargetX: '..tostring(zInfo.TargetX)
+	res = res ..'\nTargetY: '..tostring(zInfo.TargetY)
+	res = res ..'\nPathLength: '..tostring(zInfo.PathLength)
+	res = res ..'\nTargetLength: '..tostring(zInfo.TargetLength)
+	res = res ..'\nclientActionState: '..tostring(zInfo.clientActionState)
+	res = res ..'\nclientAnimationState: '..tostring(zInfo.clientAnimationState)
+	res = res ..'\nfinderProgress: '..tostring(zInfo.finderProgress)
+	res = res ..'\nusePathFind: '..tostring(zInfo.usePathFind)
+	res = res ..'\nowner: '..tostring(zInfo.owner)
+	Clipboard.setClipboard(res)
+	print(res)
+end
 function DogZedMod.Context(player, context, worldobjects)
 	local pl = getSpecificPlayer(player)
 	if not pl then return end
@@ -43,16 +63,33 @@ function DogZedMod.Context(player, context, worldobjects)
 			context:addSubMenu(Main, opt)
 			Main.iconTexture = getTexture("media/ui/DogZed_Symbol.png")
 
+			opt:addOption("Mark Alpha", worldobjects, function()
+				DogZedMod.markAlpha()
+			end);
+			opt:addOption("Alpha Z Info", worldobjects, function()
+				DogZedMod.clipInfoZ(DogZedMod.getPackAlpha())
+			end);
+
+
+
+
+
+
+
+
+
 
 			local ri = opt:addOptionOnTop(getText('ContextMenu_DogZedMod_Reward'))
 			local spwnRewardOpt = ISContextMenu:getNew(opt)
 			opt:addSubMenu(ri, spwnRewardOpt)
 
 
+
+
 			spwnRewardOpt:addOption("x3", worldobjects, function()
-					DogZedMod.SpawnRewards(sq)
-					DogZedMod.SpawnRewards(sq)
-					DogZedMod.SpawnRewards(sq)
+				DogZedMod.SpawnRewards(sq)
+				DogZedMod.SpawnRewards(sq)
+				DogZedMod.SpawnRewards(sq)
 			end);
 
 			spwnRewardOpt:addOption("x1", worldobjects, function()
@@ -212,11 +249,11 @@ function DogZedMod.Context(player, context, worldobjects)
 
 			-----------------------    wear*        ---------------------------
 			local sb = opt:addOptionOnTop(getText('ContextMenu_DogZedMod_Outfit'))
-			local spwn = ISContextMenu:getNew(opt)
-			opt:addSubMenu(sb, spwn)
+			local pldog = ISContextMenu:getNew(opt)
+			opt:addSubMenu(sb, pldog)
 
 			if not DogZedMod.isDogPl(pl) then
-				local ss = opt:addOption(getText('ContextMenu_DogZedMod_WearSkin').." RadiatedDog", worldobjects, function()
+				local ss = pldog:addOption(getText('ContextMenu_DogZedMod_WearSkin').." RadiatedDog", worldobjects, function()
 					DogZedMod.wearDogZed(pl, 0)
 					DogZedMod.addHL(pl)
 				end);
@@ -224,7 +261,7 @@ function DogZedMod.Context(player, context, worldobjects)
 				tip.description = tostring(DogZedMod.isDogPl(pl))
 				ss.toolTip = tip
 
-				local ss = opt:addOption(getText('ContextMenu_DogZedMod_WearSkin').." ShadowDog", worldobjects, function()
+				local ss = pldog:addOption(getText('ContextMenu_DogZedMod_WearSkin').." ShadowDog", worldobjects, function()
 					DogZedMod.wearDogZed(pl, 0)
 				end);
 
@@ -237,7 +274,7 @@ function DogZedMod.Context(player, context, worldobjects)
 			end
 
 
-			local ss3 = opt:addOption(getText("ContextMenu_DogZedMod_RemoveOutfit"), worldobjects, function()
+			local ss3 = pldog:addOption(getText("ContextMenu_DogZedMod_RemoveOutfit"), worldobjects, function()
 				DogZedMod.clearDogZedSkin(pl)
 			end);
 

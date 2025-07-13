@@ -27,13 +27,14 @@
 
 
 
-DogZedMod = DogZedMod or {}
 require "DogZedMod_Util"
+DogZedMod = DogZedMod or {}
 
 local Commands = {};
 Commands.DogZedMod = {};
 
 -----------------------            ---------------------------
+
 
 function DogZedMod.coreFunc(zed)
     if not zed then return end
@@ -41,34 +42,34 @@ function DogZedMod.coreFunc(zed)
         if zed:getVariableBoolean('isDogZed')  then
             zed:setVariable('isDogZed', 'false')
         end
-
-        if  DogZedMod.isHasTag(zed) then
+        if DogZedMod.isHasTag(zed) then
             DogZedMod.removeTag(zed)
         end
-
         return
     end
 
+    local isDogZed = DogZedMod.isDogZed(zed)
+    local isDogZedVar = zed:getVariableBoolean('isDogZed')
 
+    if not zed:isCrawling() then
+        zed:getModData()['DogZed_Init'] = nil
+    end
     local init = zed:getModData()['DogZed_Init']
+    if not init then
+        DogZedMod.setStats(zed)
+    end
+    if (isDogZedVar and not isDogZed ) or  (isDogZed and not isDogZedVar)  then
+        zed:setVariable('isDogZed', isDogZed)
+    end
+
 
     if DogZedMod.isDogZed(zed) then
-        if not init or not zed:getVariableBoolean('isDogZed') or  not zed:isCrawling()  then
-            zed:getModData()['DogZed_Init'] = nil
-            DogZedMod.setStats(zed)
-            zed:setVariable('isDogZed', 'true')
-        end
-        if DogZedMod.isDataSender(zed) then
+        if DogZedMod.isDataSender(zed)  then
             local AnimSpeed = DogZedMod.getAnimSpeed(zed)
+            zed:setVariable('AnimSpeed', AnimSpeed);
             if isClient() then
-                sendClientCommand('DogZedMod', 'setAnimSpeed', {AnimSpeed = AnimSpeed, zedID = zed:getOnlineID()})
+                sendClientCommand('DogZedMod', 'isDogZed', {isDogZed = true, AnimSpeed = DogZedMod.getAnimSpeed(zed), zedID = zed:getOnlineID()})
             end
-            DogZedMod.setAnimSpeed(zed, AnimSpeed)
-        end
-    else
-        if zed:getVariableString('isDogZed') or init or  zed:isReanimatedPlayer() then
-            zed:clearVariable('isDogZed')
-            zed:clearVariable('AnimSpeed')
         end
     end
 
@@ -103,8 +104,11 @@ Commands.DogZedMod.isDogZed = function(args)
 		if source ~= player then
 			if args.isDogZed == 'true' then
 				zed:setVariable('isDogZed', 'true');
+				if args.AnimSpeed then
+                    zed:setVariable('AnimSpeed', args.AnimSpeed);
+				end
 			else
-				zed:clearVariable('isDogZed')
+				zed:setVariable('isDogZed', 'false');
 			end
 		end
     end

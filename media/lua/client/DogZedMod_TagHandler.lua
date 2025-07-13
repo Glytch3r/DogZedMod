@@ -33,16 +33,14 @@ function DogZedMod.isShowTag()
     return SandboxVars.DogZedMod.ShowTag or getCore():getDebug()
 end
 
+function DogZedMod.removeTag(targ)
+    targ:clearAttachedAnimSprite()
+end
 function DogZedMod.isTagEmpty(targ)
     return tostring(targ:getChildSprites())  == '[]'
 end
 function DogZedMod.isHasTag(targ)
     return not DogZedMod.isTagEmpty(targ)
-end
-
-
-function DogZedMod.removeTag(targ)
-    targ:clearAttachedAnimSprite()
 end
 
 
@@ -65,9 +63,7 @@ function DogZedMod.setTag(targ, int)
 
                 end
 
-                if DogZedMod.isHasTag(targ) then
-                    DogZedMod.removeTag(targ)
-                end
+
 
                 local spr = getSprite("media/ui/Tags/DogZed_tag_"..tostring(int)..".png"):newInstance()
                 targ:setAttachedAnimSprite(ArrayList.new())
@@ -77,7 +73,7 @@ function DogZedMod.setTag(targ, int)
         end
     end
 end
-
+--[[
 function DogZedMod.clearStatsToAll()
     local zombies = getCell():getZombieList()
     if not getCell() or not zombies then return end
@@ -90,5 +86,5 @@ function DogZedMod.clearStatsToAll()
     end
 end
 
-
+ ]]
 -----------------------            ---------------------------

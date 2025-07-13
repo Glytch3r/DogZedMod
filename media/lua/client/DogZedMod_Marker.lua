@@ -31,6 +31,28 @@ require "lua_timers"
 DogZedMod.Highlighter = {}
 DogZedMod.Highlighter.__index = DogZedMod.Highlighter
 
+function DogZedMod.markAlpha()
+    if not (getCore():getDebug() or isAdmin()) then return end
+    local alpha = DogZedMod.getPackAlpha()
+    if alpha then
+        alpha:addLineChatElement('Alpha: '..tostring(alpha:getOnlineID()))
+        local sq = alpha:getSquare()
+        if sq then
+            local marker = getWorldMarkers():addGridSquareMarker("circle_center", "circle_only_highlight", sq, 1,1,1, true, 1);
+            local pl = getPlayer()
+            local img = getTexture("media/textures/highlights/arrow_dog.png")
+            local x, y, z = round(pl:getX()),  round(pl:getY()), pl:getZ()
+
+            local arrow = getWorldMarkers():addPlayerHomingPoint(pl, alpha:getX(), alpha:getY(), "arrow_dog", 0.8, 0.8, 0.8, 1, true, 20);
+
+            timer:Simple(15, function()
+                marker:remove(); marker = nil
+                arrow:remove(); arrow = nil
+            end)
+        end
+    end
+end
+
 
 function DogZedMod.getEffectsDecay()
     return SandboxVars.DogZedMod.EffectsDecay or 5
